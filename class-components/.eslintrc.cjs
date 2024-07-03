@@ -4,14 +4,15 @@ module.exports = {
   es2021: true
   },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2021,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
@@ -21,15 +22,16 @@ module.exports = {
       version: "detect"
     }
   },
-  plugins: ['react', 'react-hooks', 'jsx-a11y', 'prettier', 'react-compiler'],
+  plugins: ["react", "react-hooks", "jsx-a11y", "prettier", "react-compiler", "@typescript-eslint"],
   ignorePatterns: [".eslintrc.cjs", "**/*.json, **/*.config.ts"],
   rules: {
     "react-compiler/react-compiler": "error",
-    'prettier/prettier': [
-      'error',
+    "prettier/prettier": [
+      "error",
       {
-        endOfLine: 'auto'
+        endOfLine: "auto"
       }
-    ]
+    ],
+    "@typescript-eslint/no-explicit-any": "error",
   },
 };
