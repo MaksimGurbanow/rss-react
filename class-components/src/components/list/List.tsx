@@ -2,6 +2,7 @@ import React from 'react';
 import ErrorBoundary from '../common/error-boundary/ErrorBoundary';
 import Item from '../item/Item';
 import { IPokemon } from 'pokeapi-typescript';
+import './list.css';
 
 interface ListProps {
   items: IPokemon[];
@@ -23,7 +24,7 @@ export default class List extends React.Component<ListProps> {
       >
         <div className="items-list">
           {this.props.items.map((item) => (
-            <Item name={item.name} key={item.id} description="" />
+            <Item {...item} key={item.id} />
           ))}
         </div>
       </ErrorBoundary>

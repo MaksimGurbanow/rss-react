@@ -5,6 +5,8 @@ export interface ButtonProps {
   children: React.ReactNode | string;
   type?: 'button' | 'submit' | 'reset';
   onClick: Callback;
+  className?: React.HTMLAttributes<HTMLButtonElement>['className'];
+  style?: React.HTMLAttributes<HTMLButtonElement>['style'];
 }
 
 export default class Button extends React.Component<ButtonProps> {
@@ -17,7 +19,12 @@ export default class Button extends React.Component<ButtonProps> {
   }
   render() {
     return (
-      <button type={this.props.type || 'button'} onClick={this.handleClick}>
+      <button
+        type={this.props.type || 'button'}
+        onClick={this.handleClick}
+        className={this.props.className}
+        style={this.props.style}
+      >
         {this.props.children}
       </button>
     );

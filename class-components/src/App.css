@@ -7,3 +7,14 @@
   flex: 1;
   gap: 10px;
 }
+
+.fixed {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  opacity: 0.5;
+}
+
+.fixed:hover {
+  opacity: 1;
+}

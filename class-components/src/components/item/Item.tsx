@@ -1,10 +1,11 @@
 import React from 'react';
 import ErrorBoundary from '../common/error-boundary/ErrorBoundary';
+import './item.css';
+import { IPokemon } from 'pokeapi-typescript';
+import capitalize from '../../utils/capitalize';
+import Description from '../description/Description';
 
-export interface ItemProps {
-  name: string;
-  description?: string;
-}
+export interface ItemProps extends IPokemon {}
 
 export default class Item extends React.Component<ItemProps> {
   constructor(props: ItemProps) {
@@ -12,15 +13,16 @@ export default class Item extends React.Component<ItemProps> {
   }
   render() {
     return (
-      <ErrorBoundary fallback={() => null}>
-        <ErrorBoundary
-          fallback={() => <div>This item does not have a name</div>}
-        >
-          <div>{this.props.name}</div>
-        </ErrorBoundary>
-        <ErrorBoundary fallback={() => <div>No description provided</div>}>
-          <div>{this.props.description}</div>
-        </ErrorBoundary>
+      <ErrorBoundary>
+        <div className="item">
+          <ErrorBoundary>
+            <h3 className="item-name">{capitalize(this.props.name)}</h3>
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <img alt="Sprite" src={this.props.sprites.front_default} />
+          </ErrorBoundary>
+          <Description {...this.props} />
+        </div>
       </ErrorBoundary>
     );
   }

@@ -60,7 +60,7 @@ class App extends React.Component<object, AppState> {
 
   render(): React.ReactNode {
     if (this.state.error.isActive) {
-      throw new Error('Error');
+      throw new Error(this.state.error.message);
     }
 
     return (
@@ -71,14 +71,16 @@ class App extends React.Component<object, AppState> {
           value={this.state.searchQuery}
         />
         <List items={this.state.listData} />
-        <Button onClick={this.throwError}>Throw an error</Button>
+        <Button onClick={this.throwError} className="fixed">
+          Throw an error
+        </Button>
       </ErrorBoundary>
     );
   }
 }
 
 const WrappedApp = () => (
-  <ErrorBoundary fallback={() => <div>Something went wrong</div>}>
+  <ErrorBoundary>
     <App />
   </ErrorBoundary>
 );

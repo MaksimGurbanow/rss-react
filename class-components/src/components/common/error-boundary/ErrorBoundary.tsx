@@ -2,11 +2,14 @@ import React, { ErrorInfo, ReactNode } from 'react';
 import { BaseProps } from '../../../types/props';
 
 interface ErrorBoundaryProps extends BaseProps {
-  fallback: () => ReactNode | string;
+  fallback?: () => ReactNode | string;
 }
 
 interface State {
-  hasError: boolean;
+  error: {
+    exists: boolean;
+    message: string;
+  };
 }
 
 export default class ErrorBoundary extends React.Component<
@@ -17,19 +20,37 @@ export default class ErrorBoundary extends React.Component<
     super(props);
   }
   public state: State = {
-    hasError: false,
+    error: {
+      exists: false,
+      message: '',
+    },
   };
   static getDerivedStateFromError() {
-    return { hasError: true };
+    return {
+      error: {
+        exists: true,
+      },
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    this.setState({
+      error: {
+        exists: true,
+        message: error.message,
+      },
+    });
     console.error(error, errorInfo);
   }
 
+  private emitFallback() {
+    if (this.props.fallback) return this.props.fallback();
+    return null;
+  }
+
   render() {
-    if (this.state.hasError) {
-      return this.props.fallback() || <h1>Something went wrong.</h1>;
+    if (this.state.error.exists) {
+      return this.emitFallback() || <h1>{this.state.error.message}</h1>;
     }
 
     return this.props.children;
