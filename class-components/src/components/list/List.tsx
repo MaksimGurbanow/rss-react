@@ -1,11 +1,11 @@
 import React from 'react';
 import ErrorBoundary from '../common/error-boundary/ErrorBoundary';
 import Item from '../item/Item';
-import { IPokemon } from 'pokeapi-typescript';
 import './list.css';
+import { Product } from '../../types/types';
 
 interface ListProps {
-  items: IPokemon[];
+  items: Product[];
 }
 
 export default class List extends React.Component<ListProps> {

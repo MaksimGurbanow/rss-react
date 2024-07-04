@@ -11,8 +11,8 @@ interface SearchProps {
 }
 
 export default class Search extends React.Component<SearchProps> {
-  private handleSubmit() {
-    this.props.onSearch();
+  constructor(props: SearchProps) {
+    super(props);
   }
 
   render() {
@@ -23,7 +23,7 @@ export default class Search extends React.Component<SearchProps> {
           value={this.props.value}
           onChange={this.props.onChange}
         />
-        <Button onClick={this.handleSubmit}>Search</Button>
+        <Button onClick={this.props.onSearch}>Search</Button>
       </div>
     );
   }

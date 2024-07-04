@@ -2,25 +2,17 @@ import React from 'react';
 import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
-import { getItemByID, queryItems } from './app/api';
-import { IPokemon } from 'pokeapi-typescript';
+import { queryItems } from './app/api';
 import ErrorBoundary from './components/common/error-boundary/ErrorBoundary';
 import Button from './components/ui/button/Button';
-
-interface AppState {
-  searchQuery: string;
-  listData: IPokemon[];
-  error: {
-    isActive: boolean;
-    message: string;
-  };
-}
+import store from './app/store/Store';
+import { AppState } from './types/types';
 
 class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
     this.state = {
-      searchQuery: '',
+      searchQuery: store.getQuery(),
       listData: [],
       error: {
         isActive: false,
@@ -29,18 +21,24 @@ class App extends React.Component<object, AppState> {
     };
     this.updateQuery = this.updateQuery.bind(this);
     this.throwError = this.throwError.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
+
   updateQuery(newQuery: string) {
     this.setState({ searchQuery: newQuery });
   }
+
+  handleSearchSubmit() {
+    const { searchQuery } = this.state;
+    store.setQuery(searchQuery);
+  }
+
   componentDidMount(): void {
     if (this.state.error.isActive) throw new Error('Error');
-    queryItems()
-      .then((v) => v.results)
-      .then((items) => Promise.all(items.map((item) => getItemByID(item.url))))
+    queryItems(this.state.searchQuery)
+      .then((response) => response.products)
       .then((res) => this.setState({ listData: res }))
       .catch((error) => {
-        console.error('Error fetching items:', error);
         this.setState({
           error: {
             isActive: true,
@@ -49,6 +47,7 @@ class App extends React.Component<object, AppState> {
         });
       });
   }
+
   throwError() {
     this.setState({
       error: {
@@ -67,7 +66,7 @@ class App extends React.Component<object, AppState> {
       <ErrorBoundary fallback={() => <div>{this.state.error.message}</div>}>
         <Search
           onChange={this.updateQuery}
-          onSearch={() => console.log('searching...')}
+          onSearch={this.handleSearchSubmit}
           value={this.state.searchQuery}
         />
         <List items={this.state.listData} />
@@ -79,10 +78,4 @@ class App extends React.Component<object, AppState> {
   }
 }
 
-const WrappedApp = () => (
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>
-);
-
-export default WrappedApp;
+export default App;

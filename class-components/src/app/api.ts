@@ -1,14 +1,9 @@
-import { INamedApiResourceList, IPokemon } from 'pokeapi-typescript';
+import { DummyResponse } from '../types/types';
 
-export const queryItems = async (searchQuery?: string) => {
+export const queryItems = async (query: string) => {
   const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${searchQuery || ''}`,
+    `https://dummyjson.com/products/search?q=${query.trim()}`,
   );
   const items = await res.json();
-  return items as INamedApiResourceList<IPokemon>;
-};
-
-export const getItemByID = async (url: string) => {
-  const pokemon = await fetch(url);
-  return await pokemon.json();
+  return items as DummyResponse;
 };
