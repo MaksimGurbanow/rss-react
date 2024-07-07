@@ -2,22 +2,21 @@ import React from 'react';
 import './App.css';
 import Search from './components/search/Search';
 import List from './components/list/List';
-import { queryItems } from './app/api';
+import { searchProducts } from './app/api';
 import ErrorBoundary from './components/common/error-boundary/ErrorBoundary';
 import Button from './components/ui/button/Button';
-import store from './app/store/Store';
 import { AppState } from './types/types';
+import store from './store/Store';
+import Loader from './components/common/loader/Loader';
 
 class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
     this.state = {
-      searchQuery: store.getQuery(),
+      searchQuery: store.query,
       listData: [],
-      error: {
-        isActive: false,
-        message: '',
-      },
+      error: '',
+      isLoading: false,
     };
     this.updateQuery = this.updateQuery.bind(this);
     this.throwError = this.throwError.bind(this);
@@ -30,40 +29,37 @@ class App extends React.Component<object, AppState> {
 
   handleSearchSubmit() {
     const { searchQuery } = this.state;
-    store.setQuery(searchQuery);
+    store.query = searchQuery;
+    this.handleSearch();
   }
 
-  componentDidMount(): void {
-    if (this.state.error.isActive) throw new Error('Error');
-    queryItems(this.state.searchQuery)
+  handleSearch() {
+    this.setState({ isLoading: true });
+    searchProducts(this.state.searchQuery)
       .then((response) => response.products)
       .then((res) => this.setState({ listData: res }))
       .catch((error) => {
-        this.setState({
-          error: {
-            isActive: true,
-            message: error,
-          },
-        });
-      });
+        this.setState({ error });
+      })
+      .finally(() => this.setState({ isLoading: false }));
+  }
+
+  componentDidMount(): void {
+    if (this.state.error) throw new Error(this.state.error);
+    this.handleSearch();
   }
 
   throwError() {
-    this.setState({
-      error: {
-        isActive: true,
-        message: 'Synthetic error message',
-      },
-    });
+    this.setState({ error: 'Generated error' });
   }
 
   render(): React.ReactNode {
-    if (this.state.error.isActive) {
-      throw new Error(this.state.error.message);
+    if (this.state.error) {
+      throw new Error(this.state.error);
     }
 
     return (
-      <ErrorBoundary fallback={() => <div>{this.state.error.message}</div>}>
+      <ErrorBoundary fallback={() => <div>{this.state.error}</div>}>
         <Search
           onChange={this.updateQuery}
           onSearch={this.handleSearchSubmit}
@@ -73,6 +69,7 @@ class App extends React.Component<object, AppState> {
         <Button onClick={this.throwError} className="fixed">
           Throw an error
         </Button>
+        {this.state.isLoading && <Loader />}
       </ErrorBoundary>
     );
   }

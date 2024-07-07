@@ -31,8 +31,6 @@ export interface Dimension {
 export interface AppState {
   searchQuery: string;
   listData: Product[];
-  error: {
-    isActive: boolean;
-    message: string;
-  };
+  error: string;
+  isLoading: boolean;
 }

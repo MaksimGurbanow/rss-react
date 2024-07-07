@@ -1,5 +1,6 @@
 import React from 'react';
 import { Callback } from '../../../types/types';
+import './button.css';
 
 export interface ButtonProps {
   children: React.ReactNode | string;
@@ -22,7 +23,7 @@ export default class Button extends React.Component<ButtonProps> {
       <button
         type={this.props.type || 'button'}
         onClick={this.handleClick}
-        className={this.props.className}
+        className={`${this.props.className} button`}
         style={this.props.style}
       >
         {this.props.children}
