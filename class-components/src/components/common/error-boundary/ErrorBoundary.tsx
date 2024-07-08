@@ -6,10 +6,7 @@ interface ErrorBoundaryProps extends BaseProps {
 }
 
 interface State {
-  error: {
-    exists: boolean;
-    message: string;
-  };
+  error: string;
 }
 
 export default class ErrorBoundary extends React.Component<
@@ -19,27 +16,13 @@ export default class ErrorBoundary extends React.Component<
   constructor(props: ErrorBoundaryProps) {
     super(props);
   }
-  public state: State = {
-    error: {
-      exists: false,
-      message: '',
-    },
-  };
-  static getDerivedStateFromError() {
-    return {
-      error: {
-        exists: true,
-      },
-    };
-  }
+  public state: State = { error: '' };
 
+  static getDerivedStateFromError(error: Error) {
+    return { error: error.message };
+  }
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.setState({
-      error: {
-        exists: true,
-        message: error.message,
-      },
-    });
+    this.setState({ error: error.message });
     console.error(error, errorInfo);
   }
 
@@ -49,8 +32,8 @@ export default class ErrorBoundary extends React.Component<
   }
 
   render() {
-    if (this.state.error.exists) {
-      return this.emitFallback() || <h1>{this.state.error.message}</h1>;
+    if (this.state.error) {
+      return this.emitFallback() || <h1>{this.state.error}</h1>;
     }
 
     return this.props.children;

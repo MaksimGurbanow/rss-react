@@ -59,18 +59,28 @@ class App extends React.Component<object, AppState> {
     }
 
     return (
-      <ErrorBoundary fallback={() => <div>{this.state.error}</div>}>
-        <Search
-          onChange={this.updateQuery}
-          onSearch={this.handleSearchSubmit}
-          value={this.state.searchQuery}
-        />
-        <List items={this.state.listData} />
-        <Button onClick={this.throwError} className="fixed">
-          Throw an error
-        </Button>
-        {this.state.isLoading && <Loader />}
-      </ErrorBoundary>
+      <>
+        <ErrorBoundary
+          fallback={() => (
+            <h4>Is seems that search container is not created</h4>
+          )}
+        >
+          <Search
+            onChange={this.updateQuery}
+            onSearch={this.handleSearchSubmit}
+            value={this.state.searchQuery}
+          />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <List items={this.state.listData} />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Button onClick={this.throwError} className="fixed">
+            Throw an error
+          </Button>
+        </ErrorBoundary>
+        <ErrorBoundary>{this.state.isLoading && <Loader />}</ErrorBoundary>
+      </>
     );
   }
 }

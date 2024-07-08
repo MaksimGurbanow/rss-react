@@ -17,8 +17,8 @@ export default class List extends React.Component<ListProps> {
       <ErrorBoundary
         fallback={() => (
           <div>
-            Oops... Something went wrong. Please inform us about your issue via
-            this email: maksim20051708@gmail.com
+            Oops... Error occured while mounting the items. Please inform us
+            about your issue via this email: maksim20051708@gmail.com
           </div>
         )}
       >
