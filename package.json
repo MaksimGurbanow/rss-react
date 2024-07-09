@@ -9,8 +9,7 @@
     "lint": "eslint src/**/*.{js,ts,jsx,tsx}",
     "preview": "vite preview",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,scss,css}\"",
-    "precommit": "lint-staged",
-    "prepare": "cd .. && husky class-components/.husky"
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
