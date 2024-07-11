@@ -1,30 +1,18 @@
-# React + TypeScript + Vite
+# RS React
+This project aims to enhance basic underatanding of React and technologies related to it.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Get started:
+1. #### run command ```npm install```
+2. #### start development mode ```npm run dev```
+3. #### create project build ```npm run build```
 
-Currently, two official plugins are available:
+### Test:
+Project provides opportunity to test your application in two ways:
+1. With terminal
+2. With UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Running tests in console:
+All you need is just run the command ```npm test```. Upon running this command, the test coverage and all passed and failed test will be shown
+<!-- TODO: finish description later -->
+### Runnong test using UI:
+You can easily test your application with 

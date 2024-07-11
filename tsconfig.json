@@ -12,5 +12,6 @@
     "target": "ESNext",
     "sourceMap": true,
     "lib": ["ESNext"],
+    "types": ["vitest/globals"]
   },
 }

@@ -10,12 +10,15 @@
     "preview": "vite preview",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,scss,css}\"",
     "precommit": "lint-staged",
-    "prepare": "npx husky install"
+    "prepare": "npx husky install",
+    "test": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.24.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -23,6 +26,8 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-istanbul": "^2.0.2",
+    "@vitest/ui": "^2.0.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsx-a11y": "^6.9.0",
@@ -36,7 +41,8 @@
     "prettier": "^3.3.2",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^2.0.2"
   },
   "husky": {
     "hooks": {
