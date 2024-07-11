@@ -1,0 +1,27 @@
+.loader-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-block {
+  width: 100px;
+  height: 100px;
+  border: 2px solid wheat;
+  border-style:dotted;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0);
+  } to {
+    transform: rotateZ(360deg);
+  }
+}
