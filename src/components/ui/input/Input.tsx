@@ -1,24 +1,19 @@
 import React from 'react';
 import './input.css';
+import { InputProps } from '../../../types/props';
 
-export interface InputProps {
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-}
+const Input = ({ placeholder, value, onChange }: InputProps) => {
+  const handleChange = (v: string) => {
+    onChange(v);
+  };
+  return (
+    <input
+      placeholder={placeholder}
+      className="search-input"
+      value={value}
+      onChange={(e) => handleChange(e.target.value)}
+    />
+  );
+};
 
-export default class Input extends React.Component<InputProps> {
-  private handleChange(v: string) {
-    this.props.onChange(v);
-  }
-  render() {
-    return (
-      <input
-        placeholder={this.props?.placeholder}
-        className="search-input"
-        value={this.props.value}
-        onChange={(e) => this.handleChange(e.target.value)}
-      />
-    );
-  }
-}
+export default Input;

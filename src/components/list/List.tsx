@@ -2,32 +2,25 @@ import React from 'react';
 import ErrorBoundary from '../common/error-boundary/ErrorBoundary';
 import Item from '../item/Item';
 import './list.css';
-import { Product } from '../../types/types';
+import { ListProps } from '../../types/props';
 
-interface ListProps {
-  items: Product[];
-}
-
-export default class List extends React.Component<ListProps> {
-  constructor(props: ListProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <ErrorBoundary
-        fallback={() => (
-          <div>
-            Oops... Error occured while mounting the items. Please inform us
-            about your issue via this email: maksim20051708@gmail.com
-          </div>
-        )}
-      >
-        <div className="items-list">
-          {this.props.items.map((item) => (
-            <Item {...item} key={item.id} />
-          ))}
+const List = ({ items }: ListProps) => {
+  return (
+    <ErrorBoundary
+      fallback={() => (
+        <div>
+          Oops... Error occured while mounting the items. Please inform us about
+          your issue via this email: maksim20051708@gmail.com
         </div>
-      </ErrorBoundary>
-    );
-  }
-}
+      )}
+    >
+      <div className="items-list">
+        {items.map((item) => (
+          <Item {...item} key={item.id} />
+        ))}
+      </div>
+    </ErrorBoundary>
+  );
+};
+
+export default List;

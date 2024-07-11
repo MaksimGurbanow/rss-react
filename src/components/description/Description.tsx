@@ -1,13 +1,14 @@
 import React from 'react';
 import './description.css';
+import { BaseProps } from '../../types/props';
 
-export default class Description extends React.Component<{ children: string }> {
-  render() {
-    return (
-      <div className="description-block">
-        <h5>Description</h5>
-        <div>{this.props.children}</div>
-      </div>
-    );
-  }
-}
+const Description = ({ children }: BaseProps) => {
+  return (
+    <div className="description-block">
+      <h5>Description</h5>
+      <div>{children}</div>
+    </div>
+  );
+};
+
+export default Description;
