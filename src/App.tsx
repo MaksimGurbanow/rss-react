@@ -3,12 +3,12 @@ import './App.css';
 import ErrorBoundary from './components/common/error-boundary/ErrorBoundary';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './routes/Main';
-import NotFound from './routes/NotFound';
+import NotFound from './routes/notFound/NotFound';
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/main" element={<Main />} />
+      <Route path="/:page" element={<Main />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

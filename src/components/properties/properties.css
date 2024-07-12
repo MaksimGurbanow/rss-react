@@ -23,7 +23,8 @@
   font-size: 1.1em;
 }
 
-.item-property-name, .item-property-content {
+.item-property-name,
+.item-property-content {
   display: flex;
   justify-content: center;
   align-items: center;

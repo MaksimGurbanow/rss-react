@@ -22,9 +22,8 @@ export interface ButtonProps {
 export interface ItemProps extends Product {}
 
 export interface SearchProps {
-  value: string;
-  onSearch: Callback;
-  onChange: (v: string) => void;
+  onSearch: (value: string) => void;
+  queryValue: string;
 }
 
 export interface ItemPropertyProps {
