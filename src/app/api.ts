@@ -1,4 +1,5 @@
-import { DummyResponse } from '../types/types';
+import { DummyResponse, Product } from '../types/types';
+import constants from './constants';
 
 export const searchProducts = async (
   query: string,
@@ -7,8 +8,15 @@ export const searchProducts = async (
 ): Promise<DummyResponse> => {
   const skip = (page - 1) * limit;
   const res = await fetch(
-    `https://dummyjson.com/products/search?q=${query.trim()}&skip=${skip}&limit=${limit}`,
+    `${constants.apiURL}/search?q=${query.trim()}&skip=${skip}&limit=${limit}&select=title&select=id&select=thumbnail`,
   );
   const items = await res.json();
   return items;
+};
+
+export const getProductById = async (
+  productId?: string | number,
+): Promise<Product> => {
+  const res = await fetch(`${constants.apiURL}/${productId}`);
+  return await res.json();
 };

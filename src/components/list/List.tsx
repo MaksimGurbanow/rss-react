@@ -7,7 +7,12 @@ const List = ({ items }: ListProps) => {
   return (
     <div className="items-list">
       {items.map((item) => (
-        <Item title={item.title} images={item.images} key={item.id} />
+        <Item
+          title={item.title}
+          thumbnail={item.thumbnail}
+          key={item.id}
+          id={item.id}
+        />
       ))}
     </div>
   );

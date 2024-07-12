@@ -10,12 +10,12 @@ const ItemDetails = ({
   rating,
   brand,
   title,
-  images,
+  thumbnail,
 }: ItemDetailsProps) => {
   return (
     <div className="item-details">
       <h3 className="item-details-name">{capitalize(title)}</h3>
-      <img alt="Sprite" src={images[0]} />
+      <img alt="Sprite" src={thumbnail} />
       <Description>{description}</Description>
       <Properties price={price} brand={brand} rating={rating} />
     </div>

@@ -21,7 +21,7 @@ export interface ButtonProps {
 }
 
 export interface ItemProps
-  extends Pick<Product, 'title' | 'images' | 'id'>,
+  extends Pick<Product, 'title' | 'thumbnail' | 'id'>,
     BaseProps {}
 
 export interface SearchProps {
