@@ -6,4 +6,13 @@
   padding: 10px;
   justify-content: space-between;
   gap: 10px;
+  cursor: pointer;
+}
+
+.item-name:hover {
+  text-decoration: underline solid white 1px;
+}
+
+.item-image {
+  width: 50%;
 }

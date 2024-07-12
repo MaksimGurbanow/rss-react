@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Loader from '../components/common/loader/Loader';
 import List from '../components/list/List';
 import Search from '../components/search/Search';
 import useProducts from '../hooks/useProducts';
 import useSearchQuery from '../hooks/useSearchQuery';
-import Button from '../components/ui/button/Button';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
+import Switch from '../components/switch/Switch';
 
 const Main = () => {
   const { searchQuery, update } = useSearchQuery();
   const { page } = useParams();
-  const { listData, isLoading } = useProducts(searchQuery, page);
-
-  const [loaded, setLoaded] = useState(true);
+  const numberPage = Number(page);
+  const { listData, isLoading, limit, total } = useProducts(
+    searchQuery,
+    numberPage,
+  );
 
   return (
     <>
       <Search onSearch={(value) => update(value)} queryValue={searchQuery} />
-      {loaded && <List items={listData} />}
-      <Button onClick={() => setLoaded(false)}>Clock</Button>
+      <List items={listData} />
       {isLoading && <Loader />}
-
-      <div className="switch-pages-container">
-        <Button className="switch-page__button">Previous</Button>
-        <Button className="switch-page__button">Next</Button>
-      </div>
+      <Switch limit={limit} page={numberPage} total={total} />
+      <Outlet />
     </>
   );
 };

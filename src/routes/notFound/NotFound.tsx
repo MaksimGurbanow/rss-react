@@ -8,11 +8,11 @@ const NotFound = () => {
   return (
     <div className="not-found-message">
       <h3>
-        Oops... You got non existiong page. Would you like to move to the main
+        Oops... You got non existing page. Would you like to move to the main
         page?
       </h3>
 
-      <Button className="not-found-button" onClick={() => navigate('/main')}>
+      <Button className="not-found-button" onClick={() => navigate('/1')}>
         Move to main
       </Button>
     </div>

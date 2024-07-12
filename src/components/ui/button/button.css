@@ -4,3 +4,8 @@
   font-weight: bold;
   font-size: larger;
 }
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

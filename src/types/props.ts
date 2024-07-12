@@ -17,9 +17,12 @@ export interface ButtonProps {
   onClick: Callback;
   className?: React.HTMLAttributes<HTMLButtonElement>['className'];
   style?: React.HTMLAttributes<HTMLButtonElement>['style'];
+  disabled?: boolean;
 }
 
-export interface ItemProps extends Product {}
+export interface ItemProps
+  extends Pick<Product, 'title' | 'images' | 'id'>,
+    BaseProps {}
 
 export interface SearchProps {
   onSearch: (value: string) => void;
@@ -40,3 +43,11 @@ export type ItemDescriptionValues =
 export interface ListProps {
   items: Product[];
 }
+
+export interface SwitchProps {
+  limit: number;
+  page: number;
+  total: number;
+}
+
+export interface ItemDetailsProps extends Product, BaseProps {}

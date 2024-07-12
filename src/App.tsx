@@ -4,24 +4,21 @@ import ErrorBoundary from './components/common/error-boundary/ErrorBoundary';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './routes/Main';
 import NotFound from './routes/notFound/NotFound';
+import Details from './routes/Details';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/:page" element={<Main />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-};
-
-const WrappedApp = () => {
-  return (
     <ErrorBoundary>
       <BrowserRouter>
-        <App />
+        <Routes>
+          <Route path="/:page" element={<Main />}>
+            <Route path="details" element={<Details />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </ErrorBoundary>
   );
 };
 
-export default WrappedApp;
+export default App;
