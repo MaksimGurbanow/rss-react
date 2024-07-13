@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Input from '../ui/input/Input';
 import Button from '../ui/button/Button';
 import './search.css';
 import { SearchProps } from '../../types/props';
 
-const Search = ({ queryValue, onSearch }: SearchProps) => {
-  const [query, setQuery] = useState(queryValue);
+const Search = ({ searchValue, onSearch }: SearchProps) => {
+  const [query, setQuery] = useState(searchValue);
+  const inputValueChanged = useMemo(
+    () => searchValue !== query && !!(query || searchValue),
+    [query],
+  );
   return (
     <div className="search-field">
       <Input
@@ -13,7 +17,14 @@ const Search = ({ queryValue, onSearch }: SearchProps) => {
         value={query}
         onChange={(v) => setQuery(v)}
       />
-      <Button onClick={() => onSearch(query)}>Search</Button>
+      <Button
+        onClick={() => {
+          if (inputValueChanged) onSearch(query);
+        }}
+        disabled={!inputValueChanged}
+      >
+        Search
+      </Button>
     </div>
   );
 };

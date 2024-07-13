@@ -4,9 +4,11 @@
   align-items: center;
   border: 1px solid var(--border-color);
   padding: 10px;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 10px;
   cursor: pointer;
+  width: clamp(200px, 25%, 300px);
+  text-align: center;
 }
 
 .item-name:hover {
@@ -14,5 +16,5 @@
 }
 
 .item-image {
-  width: 50%;
+  width: clamp(200px, 100%, 250px)
 }

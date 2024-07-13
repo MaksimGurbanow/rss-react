@@ -1,4 +1,3 @@
-import React from 'react';
 import Item from '../item/Item';
 import './list.css';
 import { ListProps } from '../../types/props';
@@ -9,7 +8,7 @@ const List = ({ items }: ListProps) => {
       {items.map((item) => (
         <Item
           title={item.title}
-          thumbnail={item.thumbnail}
+          images={item.images}
           key={item.id}
           id={item.id}
         />

@@ -21,12 +21,12 @@ export interface ButtonProps {
 }
 
 export interface ItemProps
-  extends Pick<Product, 'title' | 'thumbnail' | 'id'>,
+  extends Pick<Product, 'title' | 'images' | 'id'>,
     BaseProps {}
 
 export interface SearchProps {
   onSearch: (value: string) => void;
-  queryValue: string;
+  searchValue: string;
 }
 
 export interface ItemPropertyProps {
@@ -44,8 +44,7 @@ export interface ListProps {
   items: Product[];
 }
 
-export interface SwitchProps {
-  limit: number;
+export interface PaginationProps {
   page: number;
   total: number;
 }

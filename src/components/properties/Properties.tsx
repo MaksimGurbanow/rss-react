@@ -1,6 +1,4 @@
-import React from 'react';
 import './properties.css';
-import ItemProperty from './ItemProperty';
 import { ItemDescriptionProps, ItemDescriptionValues } from '../../types/props';
 
 const Properties = (props: ItemDescriptionProps) => {
@@ -10,11 +8,10 @@ const Properties = (props: ItemDescriptionProps) => {
       {Object.entries<ItemDescriptionValues>(props).map(
         ([name, value]) =>
           value && (
-            <ItemProperty
-              name={name}
-              content={value}
-              key={`name-${name}:value-${value}`}
-            />
+            <div className="item-property" key={`value-${value}-key-${name}`}>
+              <div className="item-property-name">{name}</div>
+              <div className="item-property-content">{value.toString()}</div>
+            </div>
           ),
       )}
     </div>

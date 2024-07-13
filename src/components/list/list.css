@@ -1,9 +1,11 @@
 .items-list {
-  display: grid;
+  display: flex;
   width: 95%;
+  flex-wrap: wrap;
+  flex-direction: row;
   height: auto;
-  grid-template-columns: repeat(2, auto);
-  /* grid-auto-rows: 200px; */
   margin: 20px;
   gap: 20px;
+  justify-content: center;
+  align-items: stretch;
 }

@@ -1,27 +1,36 @@
-import React from 'react';
 import Loader from '../components/common/loader/Loader';
 import List from '../components/list/List';
 import Search from '../components/search/Search';
-import useProducts from '../hooks/useProducts';
+import useFetching from '../hooks/useFetching';
 import useSearchQuery from '../hooks/useSearchQuery';
-import { Outlet, useParams } from 'react-router-dom';
-import Switch from '../components/switch/Switch';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import Pagination from '../components/pagination/Pagination';
+import { DummyResponse } from '../types/types';
+import { searchProducts } from '../app/api';
 
 const Main = () => {
   const { searchQuery, update } = useSearchQuery();
   const { page } = useParams();
   const numberPage = Number(page);
-  const { listData, isLoading, limit, total } = useProducts(
-    searchQuery,
+  const { isLoading, response } = useFetching<DummyResponse>(
+    () => searchProducts(searchQuery, numberPage, import.meta.env.VITE_TOTAL),
     numberPage,
+    searchQuery,
   );
+  const navigate = useNavigate();
 
   return (
     <>
-      <Search onSearch={(value) => update(value)} queryValue={searchQuery} />
-      <List items={listData} />
+      <Search
+        onSearch={(value) => {
+          update(value);
+          navigate('/1');
+        }}
+        searchValue={searchQuery}
+      />
+      {response && <List items={response.products} />}
       {isLoading && <Loader />}
-      <Switch limit={limit} page={numberPage} total={total} />
+      {response && <Pagination page={numberPage} total={response.total} />}
       <Outlet />
     </>
   );

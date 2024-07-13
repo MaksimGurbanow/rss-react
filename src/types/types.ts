@@ -34,3 +34,5 @@ export interface AppState {
   error: string;
   isLoading: boolean;
 }
+
+export type AsyncFunction<T> = () => Promise<T>;

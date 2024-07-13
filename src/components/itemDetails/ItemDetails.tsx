@@ -1,8 +1,8 @@
-import React from 'react';
 import { ItemDetailsProps } from '../../types/props';
 import Description from '../description/Description';
 import Properties from '../properties/Properties';
 import capitalize from '../../utils/capitalize';
+import './itemDetails.css';
 
 const ItemDetails = ({
   description,
@@ -10,12 +10,12 @@ const ItemDetails = ({
   rating,
   brand,
   title,
-  thumbnail,
+  images,
 }: ItemDetailsProps) => {
   return (
     <div className="item-details">
       <h3 className="item-details-name">{capitalize(title)}</h3>
-      <img alt="Sprite" src={thumbnail} />
+      <img alt="Sprite" src={images[0]} className="item-details-image" />
       <Description>{description}</Description>
       <Properties price={price} brand={brand} rating={rating} />
     </div>

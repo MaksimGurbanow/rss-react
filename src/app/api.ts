@@ -1,5 +1,4 @@
 import { DummyResponse, Product } from '../types/types';
-import constants from './constants';
 
 export const searchProducts = async (
   query: string,
@@ -8,7 +7,7 @@ export const searchProducts = async (
 ): Promise<DummyResponse> => {
   const skip = (page - 1) * limit;
   const res = await fetch(
-    `${constants.apiURL}/search?q=${query.trim()}&skip=${skip}&limit=${limit}&select=title&select=id&select=thumbnail`,
+    `${import.meta.env.VITE_API_URL}/search?q=${query.trim()}&skip=${skip}&limit=${limit}&select=title&select=id&select=images`,
   );
   const items = await res.json();
   return items;
@@ -17,6 +16,6 @@ export const searchProducts = async (
 export const getProductById = async (
   productId?: string | number,
 ): Promise<Product> => {
-  const res = await fetch(`${constants.apiURL}/${productId}`);
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/${productId}`);
   return await res.json();
 };

@@ -1,24 +1,22 @@
-import React from 'react';
 import Button from '../ui/button/Button';
 import { useNavigate } from 'react-router-dom';
-import './switch.css';
-import { SwitchProps } from '../../types/props';
+import './pagination.css';
+import { PaginationProps } from '../../types/props';
 
-const Switch = ({ page, limit, total }: SwitchProps) => {
+const Pagination = ({ page, total }: PaginationProps) => {
   const navigate = useNavigate();
-
   return (
-    <div className="switch-pages">
+    <div className="pagination-pages">
       <Button
-        className="switch-pages__button"
+        className="pagination-pages__button"
         onClick={() => navigate(`/${page - 1}`)}
         disabled={page <= 1}
       >
         Previous
       </Button>
       <Button
-        className="switch-pages__button"
-        disabled={page * limit > total}
+        className="pagination-pages__button"
+        disabled={page * import.meta.env.VITE_TOTAL > total}
         onClick={() => navigate(`/${page + 1}`)}
       >
         Next
@@ -27,4 +25,4 @@ const Switch = ({ page, limit, total }: SwitchProps) => {
   );
 };
 
-export default Switch;
+export default Pagination;

@@ -1,4 +1,3 @@
-import React from 'react';
 import './input.css';
 import { InputProps } from '../../../types/props';
 

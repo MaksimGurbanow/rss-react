@@ -1,4 +1,3 @@
-import React from 'react';
 import './notFound.css';
 import Button from '../../components/ui/button/Button';
 import { useNavigate } from 'react-router-dom';

@@ -1,35 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getProductById } from '../../app/api';
 import ItemDetails from '../../components/itemDetails/ItemDetails';
 import { Product } from '../../types/types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui/button/Button';
 import Close from '../../../public/x-lg.svg?react';
 import Open from '../../../public/caret-left-fill.svg?react';
 import './details.css';
+import useFetching from '../../hooks/useFetching';
+import Loader from '../../components/common/loader/Loader';
 
 const Details = () => {
-  const [product, setProduct] = useState<Product>();
   const { productId } = useParams();
-  const [opened, setOpened] = useState(true);
+  const navigate = useNavigate();
+  const currentOrStoredProductId = useMemo(
+    () => productId || localStorage.getItem('productId'),
+    [productId],
+  );
+  const [opened, setOpened] = useState(!!currentOrStoredProductId);
+  const { response: product, isLoading } = useFetching<Product>(
+    currentOrStoredProductId
+      ? () => getProductById(currentOrStoredProductId)
+      : undefined,
+    productId,
+  );
 
   useEffect(() => {
-    getProductById(productId)
-      .then((res) => setProduct(res))
-      .catch(() => {
-        throw new Error('Product id is not defined');
-      });
-    return setOpened(true);
+    setOpened(!!productId);
+
+    return () => {
+      if (productId) localStorage.setItem('productId', productId || '');
+    };
   }, [productId]);
+
   return (
-    <div
-      className={`product-details ${opened ? '' : 'product-details__disabled'}`}
-    >
-      <div
-        className={`product-details-container ${opened ? 'opened' : 'closed'}`}
-      >
+    <div className={`details-page ${opened ? '' : 'details-page__disabled'}`}>
+      <div className={`details-page-container ${opened ? 'opened' : 'closed'}`}>
+        {isLoading && opened && <Loader />}
         {product && <ItemDetails {...product} />}
-        <Button onClick={() => setOpened((prev) => !prev)}>
+        <Button
+          onClick={() => {
+            navigate('../details');
+            setOpened((prev) => !prev);
+          }}
+        >
           <Close />
         </Button>
       </div>

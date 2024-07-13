@@ -1,4 +1,3 @@
-import React from 'react';
 import './description.css';
 import { BaseProps } from '../../types/props';
 
