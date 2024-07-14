@@ -1,0 +1,11 @@
+.no-items-message {
+  margin: auto;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+  text-align: center;
+}
