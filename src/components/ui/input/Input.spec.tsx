@@ -5,13 +5,7 @@ describe('Input Component', () => {
   test('Should change value upon typing', () => {
     const handleChange = vi.fn();
 
-    render(
-      <Input 
-        placeholder="Search..." 
-        value="" 
-        onChange={handleChange} 
-      />
-    );
+    render(<Input placeholder="Search..." value="" onChange={handleChange} />);
 
     const input = screen.getByPlaceholderText('Search...');
     fireEvent.change(input, { target: { value: 'new value' } });

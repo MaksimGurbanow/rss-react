@@ -1,6 +1,6 @@
 import './App.css';
 import ErrorBoundary from './components/common/error-boundary/ErrorBoundary';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Main from './routes/main/Main';
 import NotFound from './routes/notFound/NotFound';
 import Details from './routes/details/Details';
@@ -8,6 +8,7 @@ import Details from './routes/details/Details';
 export const App = () => {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="1" />} />
       <Route path="/:page" element={<Main />}>
         <Route path="details/:productId?" element={<Details />} />
       </Route>
