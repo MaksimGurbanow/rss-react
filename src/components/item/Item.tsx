@@ -6,9 +6,20 @@ import { useNavigate } from 'react-router-dom';
 const Item = ({ title, images, id }: ItemProps) => {
   const navigate = useNavigate();
   return (
-    <div className="item" onClick={() => navigate(`details/${id}`)}>
-      <h3 className="item-name">{capitalize(title)}</h3>
-      <img alt="Sprite" src={images[0]} className="item-image" />
+    <div
+      className="item"
+      onClick={() => navigate(`details/${id}`)}
+      data-testid="item-container"
+    >
+      <h3 className="item-name" data-testid="item-name">
+        {capitalize(title)}
+      </h3>
+      <img
+        alt="Sprite"
+        src={images[0]}
+        className="item-image"
+        data-testid="item-image"
+      />
     </div>
   );
 };

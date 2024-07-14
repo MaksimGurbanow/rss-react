@@ -9,6 +9,7 @@ export interface InputProps {
   placeholder: string;
   value?: string;
   onChange: (v: string) => void;
+  testid?: string;
 }
 
 export interface ButtonProps {
@@ -18,6 +19,7 @@ export interface ButtonProps {
   className?: React.HTMLAttributes<HTMLButtonElement>['className'];
   style?: React.HTMLAttributes<HTMLButtonElement>['style'];
   disabled?: boolean;
+  testid?: string;
 }
 
 export interface ItemProps
@@ -41,7 +43,7 @@ export type ItemDescriptionValues =
   ItemDescriptionProps[keyof ItemDescriptionProps];
 
 export interface ListProps {
-  items: Product[];
+  items: Pick<Product, 'title' | 'images' | 'id'>[];
 }
 
 export interface PaginationProps {

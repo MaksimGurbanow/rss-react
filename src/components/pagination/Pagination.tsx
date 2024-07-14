@@ -6,18 +6,20 @@ import { PaginationProps } from '../../types/props';
 const Pagination = ({ page, total }: PaginationProps) => {
   const navigate = useNavigate();
   return (
-    <div className="pagination-pages">
+    <div className="pagination-pages" data-testid="pagination-container">
       <Button
         className="pagination-pages__button"
         onClick={() => navigate(`/${page - 1}`)}
         disabled={page <= 1}
+        testid="pagination-previous"
       >
         Previous
       </Button>
       <Button
         className="pagination-pages__button"
-        disabled={page * import.meta.env.VITE_TOTAL > total}
+        disabled={page * import.meta.env.VITE_LIMIT > total}
         onClick={() => navigate(`/${page + 1}`)}
+        testid="pagination-next"
       >
         Next
       </Button>

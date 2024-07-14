@@ -8,6 +8,7 @@ const Button = ({
   children,
   style,
   disabled = false,
+  testid,
 }: ButtonProps) => {
   const handleClick = () => {
     onClick();
@@ -19,6 +20,7 @@ const Button = ({
       className={`${className} button ${disabled ? 'disabled' : ''}`}
       style={style}
       disabled={disabled}
+      data-testid={testid}
     >
       {children}
     </button>

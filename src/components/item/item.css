@@ -16,5 +16,5 @@
 }
 
 .item-image {
-  width: clamp(200px, 100%, 250px)
+  width: clamp(200px, 100%, 250px);
 }

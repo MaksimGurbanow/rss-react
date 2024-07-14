@@ -3,7 +3,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_URL;
-  readonly VITE_TOTAL;
+  readonly VITE_LIMIT;
 }
 
 interface ImportMeta {

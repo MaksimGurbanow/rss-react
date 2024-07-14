@@ -1,12 +1,13 @@
 import './input.css';
 import { InputProps } from '../../../types/props';
 
-const Input = ({ placeholder, value, onChange }: InputProps) => {
+const Input = ({ placeholder, value, onChange, testid }: InputProps) => {
   const handleChange = (v: string) => {
     onChange(v);
   };
   return (
     <input
+      data-testid={testid}
       placeholder={placeholder}
       className="search-input"
       value={value}

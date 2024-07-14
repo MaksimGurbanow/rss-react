@@ -11,17 +11,19 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
     [query],
   );
   return (
-    <div className="search-field">
+    <div className="search-field" data-testid="search-container">
       <Input
         placeholder="Type here to search what you need"
         value={query}
         onChange={(v) => setQuery(v)}
+        testid="search-input"
       />
       <Button
         onClick={() => {
           if (inputValueChanged) onSearch(query);
         }}
         disabled={!inputValueChanged}
+        testid="search-button"
       >
         Search
       </Button>

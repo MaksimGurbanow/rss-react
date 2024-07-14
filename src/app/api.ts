@@ -7,7 +7,7 @@ export const searchProducts = async (
 ): Promise<DummyResponse> => {
   const skip = (page - 1) * limit;
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/search?q=${query.trim()}&skip=${skip}&limit=${limit}&select=title&select=id&select=images`,
+    `${import.meta.env.VITE_API_URL}/search?q=${query.trim()}&skip=${skip}&limit=${limit}&select=title&select=id&select=images&total=11`,
   );
   const items = await res.json();
   return items;

@@ -10,9 +10,10 @@ export default defineConfig({
   plugins: [react(), svgr()],
   test: {
     globals: true,
+    environment: 'happy-dom',
     coverage: {
       provider: 'istanbul',
-      reporter: ['html'],
+      reporter: ['text', 'html', 'clover', 'json'],
     },
   },
 });

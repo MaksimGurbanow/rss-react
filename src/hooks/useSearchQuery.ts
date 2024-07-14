@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default () => {
+export const useSearchQuery = () => {
   const [searchQuery, setSearchQuery] = useState(
     localStorage.getItem('searchQuery') || '',
   );
@@ -11,6 +11,7 @@ export default () => {
 
   const update = (value: string) => {
     setSearchQuery(value);
+    localStorage.setItem('searchQuery', value);
   };
 
   return { searchQuery, update };
