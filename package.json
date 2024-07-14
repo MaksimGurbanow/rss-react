@@ -14,7 +14,7 @@
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "prepush": "test"
+    "prepush": "npm run test"
   },
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
