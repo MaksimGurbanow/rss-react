@@ -5,7 +5,7 @@
     "skipLibCheck": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "noEmit": true,

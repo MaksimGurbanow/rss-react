@@ -5,6 +5,8 @@ import Main from './routes/main/Main';
 import NotFound from './routes/notFound/NotFound';
 import Details from './routes/details/Details';
 import { ThemeProvider, useThemeContext } from './contexts/ThemeContext';
+import store from './app/redux/store';
+import { Provider } from 'react-redux';
 
 export const App = () => {
   const { theme } = useThemeContext();
@@ -26,7 +28,9 @@ const WrappedApp = () => {
     <ErrorBoundary>
       <BrowserRouter>
         <ThemeProvider>
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </ThemeProvider>
       </BrowserRouter>
     </ErrorBoundary>

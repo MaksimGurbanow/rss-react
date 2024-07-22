@@ -1,12 +1,10 @@
 import Loader from '../../components/common/loader/Loader';
 import List from '../../components/list/List';
 import Search from '../../components/search/Search';
-import { useFetching } from '../../hooks/useFetching';
 import { useSearchQuery } from '../../hooks/useSearchQuery';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/Pagination';
-import { DummyResponse } from '../../types/types';
-import { searchProducts } from '../../app/api';
+import { useGetProductsPageQuery } from '../../app/api';
 import { useEffect } from 'react';
 import './main.scss';
 
@@ -14,11 +12,11 @@ const Main = () => {
   const { searchQuery, update } = useSearchQuery();
   const { page } = useParams();
   const numberPage = Number(page);
-  const { isLoading, response } = useFetching<DummyResponse>(
-    () => searchProducts(searchQuery, numberPage, import.meta.env.VITE_LIMIT),
-    numberPage,
-    searchQuery,
-  );
+  const { isLoading, data: response } = useGetProductsPageQuery({
+    query: searchQuery,
+    page: numberPage,
+    limit: import.meta.env.VITE_LIMIT,
+  });
   const navigate = useNavigate();
 
   useEffect(() => {

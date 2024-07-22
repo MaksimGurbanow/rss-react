@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getProductById } from '../../app/api';
+import { useGetProductByIdQuery } from '../../app/api';
 import ItemDetails from '../../components/itemDetails/ItemDetails';
-import { Product } from '../../types/types';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui/button/Button';
 import Close from '../../assets/x-lg.svg?react';
 import Open from '../../assets/caret-left-fill.svg?react';
 import './details.scss';
-import { useFetching } from '../../hooks/useFetching';
 import Loader from '../../components/common/loader/Loader';
 
 const Details = () => {
@@ -18,12 +16,9 @@ const Details = () => {
     [productId],
   );
   const [opened, setOpened] = useState(!!currentOrStoredProductId);
-  const { response: product, isLoading } = useFetching<Product>(
-    currentOrStoredProductId
-      ? () => getProductById(currentOrStoredProductId)
-      : undefined,
-    productId,
-  );
+  const { data: product, isLoading } = useGetProductByIdQuery({
+    id: currentOrStoredProductId,
+  });
 
   useEffect(() => {
     setOpened(!!productId);
