@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
 import Input from '../ui/input/Input';
 import Button from '../ui/button/Button';
-import './search.css';
+import './search.scss';
 import { SearchProps } from '../../types/props';
+import Toggle from '../toggle/Toggle';
+import { BrightnessHighFill, MoonStarsFill } from 'react-bootstrap-icons';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 const Search = ({ searchValue, onSearch }: SearchProps) => {
   const [query, setQuery] = useState(searchValue);
@@ -10,6 +13,8 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
     () => searchValue !== query && !!(query || searchValue),
     [query],
   );
+
+  const { theme, toggleTheme } = useThemeContext();
   return (
     <div className="search-field" data-testid="search-container">
       <Input
@@ -27,6 +32,12 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
       >
         Search
       </Button>
+      <Toggle
+        initial={{ icon: <BrightnessHighFill /> }}
+        end={{ icon: <MoonStarsFill /> }}
+        callback={toggleTheme}
+        defaultToggled={theme === 'light'}
+      />
     </div>
   );
 };

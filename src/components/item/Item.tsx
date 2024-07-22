@@ -1,4 +1,4 @@
-import './item.css';
+import './item.scss';
 import capitalize from '../../utils/capitalize';
 import { ItemProps } from '../../types/props';
 import { useNavigate } from 'react-router-dom';

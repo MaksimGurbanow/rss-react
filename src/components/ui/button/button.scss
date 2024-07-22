@@ -1,6 +1,6 @@
 .button {
-  background-color: #097181;
-  color: white;
+  background-color: var(--button-primary-color);
+  color: var(--text-primary-color);
   font-weight: bold;
   font-size: larger;
 }

@@ -1,6 +1,6 @@
 import Button from '../ui/button/Button';
 import { useNavigate } from 'react-router-dom';
-import './pagination.css';
+import './pagination.scss';
 import { PaginationProps } from '../../types/props';
 
 const Pagination = ({ page, total }: PaginationProps) => {

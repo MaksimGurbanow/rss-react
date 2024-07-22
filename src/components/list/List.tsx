@@ -1,5 +1,5 @@
 import Item from '../item/Item';
-import './list.css';
+import './list.scss';
 import { ListProps } from '../../types/props';
 import NoItemsMessage from '../noItemsMessage/NoItemsMessage';
 

@@ -1,0 +1,15 @@
+.search-input {
+  width: 40%;
+  padding-inline: 20px;
+  outline: none;
+  border: none;
+  background-color: var(--background-secondary);
+  color: var(--text-secondary-color);
+  font-size: 17px;
+  font-weight: 900;
+
+  &::placeholder {
+    color: var(--text-secondary-color);
+
+  }
+}

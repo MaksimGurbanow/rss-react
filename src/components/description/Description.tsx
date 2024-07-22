@@ -1,4 +1,4 @@
-import './description.css';
+import './description.scss';
 import { BaseProps } from '../../types/props';
 
 const Description = ({ children }: BaseProps) => {

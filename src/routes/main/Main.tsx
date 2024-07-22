@@ -8,7 +8,7 @@ import Pagination from '../../components/pagination/Pagination';
 import { DummyResponse } from '../../types/types';
 import { searchProducts } from '../../app/api';
 import { useEffect } from 'react';
-import './main.css';
+import './main.scss';
 
 const Main = () => {
   const { searchQuery, update } = useSearchQuery();

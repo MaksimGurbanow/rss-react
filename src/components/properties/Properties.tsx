@@ -1,4 +1,4 @@
-import './properties.css';
+import './properties.scss';
 import { ItemDescriptionProps, ItemDescriptionValues } from '../../types/props';
 
 const Properties = (props: ItemDescriptionProps) => {

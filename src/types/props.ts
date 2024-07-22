@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
-import { Callback, Product } from './types';
+import { Callback, Product, ToggleState } from './types';
 
 export interface BaseProps {
   children?: string | ReactNode;
+  className?: React.HTMLAttributes<HTMLButtonElement>['className'];
+  style?: React.HTMLAttributes<HTMLButtonElement>['style'];
 }
 
 export interface InputProps {
@@ -12,12 +14,9 @@ export interface InputProps {
   testid?: string;
 }
 
-export interface ButtonProps {
-  children: React.ReactNode | string;
+export interface ButtonProps extends BaseProps {
   type?: 'button' | 'submit' | 'reset';
   onClick: Callback;
-  className?: React.HTMLAttributes<HTMLButtonElement>['className'];
-  style?: React.HTMLAttributes<HTMLButtonElement>['style'];
   disabled?: boolean;
   testid?: string;
 }
@@ -52,3 +51,10 @@ export interface PaginationProps {
 }
 
 export interface ItemDetailsProps extends Product, BaseProps {}
+
+export interface ToogleProps extends BaseProps {
+  initial: ToggleState;
+  end: ToggleState;
+  callback?: () => void;
+  defaultToggled?: boolean;
+}

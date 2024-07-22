@@ -2,7 +2,7 @@ import { ItemDetailsProps } from '../../types/props';
 import Description from '../description/Description';
 import Properties from '../properties/Properties';
 import capitalize from '../../utils/capitalize';
-import './itemDetails.css';
+import './itemDetails.scss';
 
 const ItemDetails = ({
   description,

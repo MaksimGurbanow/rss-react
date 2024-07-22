@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui/button/Button';
 import Close from '../../assets/x-lg.svg?react';
 import Open from '../../assets/caret-left-fill.svg?react';
-import './details.css';
+import './details.scss';
 import { useFetching } from '../../hooks/useFetching';
 import Loader from '../../components/common/loader/Loader';
 

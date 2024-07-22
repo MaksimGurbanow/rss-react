@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type Callback = () => void;
 
 export interface DummyResponse {
@@ -36,3 +38,9 @@ export interface AppState {
 }
 
 export type AsyncFunction<T> = () => Promise<T>;
+
+export interface ToggleState {
+  icon: ReactNode;
+  className?: React.HTMLAttributes<HTMLButtonElement>['className'];
+  style?: React.HTMLAttributes<HTMLButtonElement>['style'];
+}

@@ -1,0 +1,23 @@
+.toggle {
+  &-button {
+    width: 150px;
+    position: relative;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    border-radius: 50px;
+  }
+  
+  &-circle {
+    border-radius: 50%;
+    border: 1px solid antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    transition: all 500ms;
+    &.toggled {
+      transform: translateX(calc(150px - 200%));
+    }
+  }
+}

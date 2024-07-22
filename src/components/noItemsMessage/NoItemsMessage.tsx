@@ -1,4 +1,4 @@
-import './noItemsMessage.css';
+import './noItemsMessage.scss';
 
 const NoItemsMessage = () => {
   return (
