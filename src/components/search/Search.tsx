@@ -36,7 +36,7 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
         initial={{ icon: <BrightnessHighFill /> }}
         end={{ icon: <MoonStarsFill /> }}
         callback={toggleTheme}
-        defaultToggled={theme === 'light'}
+        defaultToggled={theme === 'dark'}
       />
     </div>
   );

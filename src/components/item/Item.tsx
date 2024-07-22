@@ -2,9 +2,15 @@ import './item.scss';
 import capitalize from '../../utils/capitalize';
 import { ItemProps } from '../../types/props';
 import { useNavigate } from 'react-router-dom';
+import { MouseEvent } from 'react';
 
 const Item = ({ title, images, id }: ItemProps) => {
   const navigate = useNavigate();
+  const saveItem = (event: MouseEvent) => {
+    if (event) {
+      event.stopPropagation();
+    }
+  };
   return (
     <div
       className="item"
@@ -20,6 +26,7 @@ const Item = ({ title, images, id }: ItemProps) => {
         className="item-image"
         data-testid="item-image"
       />
+      <button onClick={saveItem}>Save</button>
     </div>
   );
 };
