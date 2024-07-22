@@ -11,13 +11,13 @@ const Button = ({
   testid,
 }: ButtonProps) => {
   const handleClick = () => {
-    onClick();
+    if (onClick) onClick();
   };
   return (
     <button
       type={type || 'button'}
       onClick={handleClick}
-      className={`${className} button ${disabled ? 'disabled' : ''}`}
+      className={`button ${disabled ? 'disabled' : ''} ${className}`}
       style={style}
       disabled={disabled}
       data-testid={testid}

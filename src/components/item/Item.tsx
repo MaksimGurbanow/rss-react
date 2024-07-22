@@ -2,14 +2,26 @@ import './item.scss';
 import capitalize from '../../utils/capitalize';
 import { ItemProps } from '../../types/props';
 import { useNavigate } from 'react-router-dom';
-import { MouseEvent } from 'react';
+import { MouseEvent, useMemo } from 'react';
+import store, { RootState } from '../../app/redux/store';
+import {
+  addProduct,
+  removeProduct,
+} from '../../app/redux/slices/savedProducts';
+import { getProductById } from '../../app/api';
+import { useSelector } from 'react-redux';
 
 const Item = ({ title, images, id }: ItemProps) => {
   const navigate = useNavigate();
-  const saveItem = (event: MouseEvent) => {
-    if (event) {
-      event.stopPropagation();
-    }
+  const savedProducts = useSelector((state: RootState) => state.savedProducts);
+  const isSaved = useMemo(
+    () => savedProducts.some((product) => product.id === id),
+    [savedProducts],
+  );
+  const handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
+    if (isSaved) store.dispatch(removeProduct(id));
+    else getProductById(id).then((item) => store.dispatch(addProduct(item)));
   };
   return (
     <div
@@ -26,7 +38,7 @@ const Item = ({ title, images, id }: ItemProps) => {
         className="item-image"
         data-testid="item-image"
       />
-      <button onClick={saveItem}>Save</button>
+      <button onClick={handleClick}>{isSaved ? 'Delete' : 'Save'}</button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { App } from '../../App';
-import { getProductById } from '../../app/api';
+import { getProductById } from '../../app/redux/slices/api';
 import Item from './Item';
 import capitalize from '../../utils/capitalize';
 import { renderWithRouter } from '../../App.spec';

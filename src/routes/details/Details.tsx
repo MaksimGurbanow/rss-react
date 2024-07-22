@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGetProductByIdQuery } from '../../app/api';
+import { useGetProductByIdQuery } from '../../app/redux/slices/productDetails';
 import ItemDetails from '../../components/itemDetails/ItemDetails';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui/button/Button';
@@ -16,12 +16,13 @@ const Details = () => {
     [productId],
   );
   const [opened, setOpened] = useState(!!currentOrStoredProductId);
-  const { data: product, isLoading } = useGetProductByIdQuery({
-    id: currentOrStoredProductId,
+  const { data: product, isFetching } = useGetProductByIdQuery({
+    id: currentOrStoredProductId || '1',
   });
 
   useEffect(() => {
     setOpened(!!productId);
+    if (productId) localStorage.setItem('productId', productId || '');
 
     return () => {
       if (productId) localStorage.setItem('productId', productId || '');
@@ -34,8 +35,8 @@ const Details = () => {
       data-testid="details-page"
     >
       <div className={`details-page-container ${opened ? 'opened' : 'closed'}`}>
-        {isLoading && opened && <Loader />}
         {product && <ItemDetails {...product} />}
+        {isFetching && <Loader />}
         <Button
           onClick={() => {
             navigate('../details');

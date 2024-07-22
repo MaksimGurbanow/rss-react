@@ -1,7 +1,7 @@
 export interface GetProductsPageQueryParams {
-  query: string;
   page: number;
   limit: number;
+  query: string;
 }
 
 export interface GetProductByIdQueryParams {

@@ -16,7 +16,7 @@ export interface InputProps {
 
 export interface ButtonProps extends BaseProps {
   type?: 'button' | 'submit' | 'reset';
-  onClick: Callback;
+  onClick?: Callback;
   disabled?: boolean;
   testid?: string;
 }
