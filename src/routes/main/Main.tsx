@@ -39,7 +39,7 @@ const Main = () => {
       {response && <List items={response.products} />}
       {isFetching && <Loader />}
       {response && <Pagination page={numberPage} total={response.total} />}
-      {savedProducts.length && <SavedItems />}
+      {!!savedProducts.length && <SavedItems />}
       <Outlet />
     </div>
   );
