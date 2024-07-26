@@ -6,9 +6,9 @@ import { PaginationProps } from '../../types/props';
 const Pagination = ({ page, total }: PaginationProps) => {
   const navigate = useNavigate();
   return (
-    <div className="pagination-pages" data-testid="pagination-container">
+    <>
       <Button
-        className="pagination-pages__button"
+        className="pagination-pages__button previous"
         onClick={() => navigate(`/${page - 1}`)}
         disabled={page <= 1}
         testid="pagination-previous"
@@ -16,14 +16,14 @@ const Pagination = ({ page, total }: PaginationProps) => {
         Previous
       </Button>
       <Button
-        className="pagination-pages__button"
+        className="pagination-pages__button next"
         disabled={page * import.meta.env.VITE_LIMIT > total}
         onClick={() => navigate(`/${page + 1}`)}
         testid="pagination-next"
       >
         Next
       </Button>
-    </div>
+    </>
   );
 };
 

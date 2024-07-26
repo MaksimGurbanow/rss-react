@@ -9,6 +9,7 @@
   cursor: pointer;
   width: clamp(200px, 25%, 300px);
   text-align: center;
+  min-height: 500px;
 }
 
 .item-name:hover {

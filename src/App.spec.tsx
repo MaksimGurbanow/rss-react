@@ -1,11 +1,20 @@
 import '@testing-library/dom';
-import { render, RenderResult, screen } from '@testing-library/react';
-import { App } from './App';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  screen,
+} from '@testing-library/react';
+import WrappedApp, { App } from './App';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Product } from './types/types';
+import { Provider } from 'react-redux';
+import store from './app/redux/store';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { act } from 'react';
 
-export const renderWithRouter = (
+export const wrappedComponent = (
   ui: React.ReactNode,
   route: string[],
 ): RenderResult & { history: MemoryHistory } => {
@@ -13,7 +22,7 @@ export const renderWithRouter = (
 
   const rendered = render(
     <MemoryRouter initialEntries={route} initialIndex={0}>
-      {ui}
+      <Provider store={store}>{ui}</Provider>
     </MemoryRouter>,
   );
 
@@ -25,20 +34,45 @@ export const renderWithRouter = (
 
 describe('Should open expected component upon changing the url path', () => {
   test('Should render Main component for / route', async () => {
-    renderWithRouter(<App />, ['/1']);
+    wrappedComponent(<App />, ['/1']);
     const mainPage = await screen.findByTestId('main-page');
     expect(mainPage).toBeDefined();
   });
 
   test('Should render Details component for /:page/details:productId? route', async () => {
-    renderWithRouter(<App />, ['/1/details/1']);
+    wrappedComponent(<App />, ['/1/details/1']);
     const detailsPage = await screen.findByTestId('details-page');
     expect(detailsPage).toBeDefined();
   });
 
   test('Should render NotFound page for non existing royte', async () => {
-    renderWithRouter(<App />, ['/non-existing-page']);
+    wrappedComponent(<App />, ['/non-existing-page']);
     const notFoundPage = await screen.findByTestId('not-found-page');
     expect(notFoundPage).toBeDefined();
+  });
+});
+
+describe('Theme component should work correctly', () => {
+  test('Should have a theme wrapper', async () => {
+    wrappedComponent(
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>,
+      ['/1'],
+    );
+    const themeWrapper = await screen.findByTestId('theme-wrapper');
+    expect(themeWrapper).toBeDefined();
+    expect(themeWrapper).toHaveProperty(
+      'className',
+      'theme-wrapper light-theme',
+    );
+    const toggleTheme = await screen.findByTestId('toggle-theme');
+    act(() => {
+      fireEvent.click(toggleTheme);
+    });
+    expect(themeWrapper).toHaveProperty(
+      'className',
+      'theme-wrapper dark-theme',
+    );
   });
 });

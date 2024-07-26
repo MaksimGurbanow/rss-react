@@ -57,4 +57,5 @@ export interface ToogleProps extends BaseProps {
   end: ToggleState;
   callback?: () => void;
   defaultToggled?: boolean;
+  testid?: string;
 }

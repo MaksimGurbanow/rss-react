@@ -33,12 +33,17 @@ const Item = ({ title, images, id }: ItemProps) => {
         {capitalize(title)}
       </h3>
       <img
+        loading="lazy"
+        role="presentation"
+        decoding="async"
         alt="Sprite"
         src={images[0]}
         className="item-image"
         data-testid="item-image"
       />
-      <button onClick={handleClick}>{isSaved ? 'Delete' : 'Save'}</button>
+      <button onClick={handleClick} data-testid={`save-button-${id}`}>
+        {isSaved ? 'Delete' : 'Save'}
+      </button>
     </div>
   );
 };

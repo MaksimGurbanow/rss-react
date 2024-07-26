@@ -39,6 +39,7 @@ export const ThemeProvider = ({ children }: BaseProps) => {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div
         className={`theme-wrapper ${theme === 'light' ? 'light-theme' : 'dark-theme'}`}
+        data-testid="theme-wrapper"
       >
         {children}
       </div>

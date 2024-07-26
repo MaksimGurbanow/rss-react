@@ -35,13 +35,14 @@ const Details = () => {
       data-testid="details-page"
     >
       <div className={`details-page-container ${opened ? 'opened' : 'closed'}`}>
-        {product && <ItemDetails {...product} />}
+        {product && opened && <ItemDetails {...product} />}
         {isFetching && <Loader />}
         <Button
           onClick={() => {
             navigate('../details');
             setOpened((prev) => !prev);
           }}
+          disabled={!opened}
           testid="details-close-button"
         >
           <Close />

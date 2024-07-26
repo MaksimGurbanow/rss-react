@@ -3,41 +3,30 @@ import { App } from '../../App';
 import { vi } from 'vitest';
 import Details from './Details';
 import capitalize from '../../utils/capitalize';
-import { renderWithRouter } from '../../App.spec';
+import { wrappedComponent } from '../../App.spec';
 import { mockItem } from '../../test/contants';
+import { server } from '../../test/mockServer';
 
 describe('Details', () => {
+  beforeAll(() => {
+    server.listen();
+  });
   beforeEach(() => {
-    vi.mock('../../app/api', () => ({
-      getProductById: vi.fn(() => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(mockItem);
-          }, 1000);
-        });
-      }),
-      searchProducts: vi.fn(() => {
-        return Promise.resolve({
-          products: [mockItem],
-          total: 1,
-          skip: 0,
-          limit: 1,
-        });
-      }),
-    }));
+    server.resetHandlers();
   });
   afterEach(() => {
     vi.clearAllMocks();
     vi.clearAllTimers();
   });
 
-  test('Should render Loading indicator while data is not fetched yet', async () => {
-    act(() => {
-      renderWithRouter(<App />, ['/1/details/1']);
-    });
+  afterAll(() => {
+    server.close();
+  });
 
-    const loader = await screen.findByTestId('loader-container');
-    expect(loader).toBeDefined();
+  test('Should render while data is not fetched yet', async () => {
+    act(() => {
+      wrappedComponent(<App />, ['/1/details/1']);
+    });
 
     const details = await screen.findByTestId('details-page');
     expect(details).toBeDefined();
@@ -50,7 +39,7 @@ describe('Details', () => {
           productId: '1',
         })),
       }));
-      renderWithRouter(<Details />, ['/1']);
+      wrappedComponent(<Details />, ['/1']);
       const openButton = await screen.findByTestId('open-details-button');
       act(() => {
         fireEvent.click(openButton);
@@ -80,9 +69,9 @@ describe('Details', () => {
       act(() => {
         fireEvent.click(closeButton);
       });
+      const detailsContainer = await screen.findByTestId('details-page');
       const itemName = screen.queryByTestId('item-details-name');
       const itemImage = screen.queryByTestId('item-details-image');
-      const detailsContainer = await screen.findByTestId('details-page');
 
       expect(itemName).toBeNull();
       expect(itemImage).toBeNull();

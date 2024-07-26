@@ -1,11 +1,9 @@
-.pagination-pages {
+.pagination-pages__button {
   position: fixed;
   bottom: 20px;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.pagination-pages__button {
   margin: 0 20px;
+
+  &.next {
+    right: 0;
+  }
 }

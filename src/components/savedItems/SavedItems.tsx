@@ -17,7 +17,7 @@ const SavedItems = () => {
     [savedProducts],
   );
   return (
-    <div className="saved-products-block">
+    <div className="saved-products-block" data-testid="saved-products">
       <h2 className="saved-products-header">Saved items</h2>
       <h3 className="saved-products-subheader">
         {savedProducts.length} {pluralize('item', savedProducts.length)}{' '}

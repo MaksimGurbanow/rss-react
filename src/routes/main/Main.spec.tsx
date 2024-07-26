@@ -1,15 +1,23 @@
-import { screen, waitFor } from '@testing-library/dom';
-import { renderWithRouter } from '../../App.spec';
+import { fireEvent, screen, waitFor } from '@testing-library/dom';
+import { wrappedComponent } from '../../App.spec';
 import { App } from '../../App';
 import { act } from '@testing-library/react';
+import { server } from '../../test/mockServer';
 
 describe('Check the main page content', () => {
+  beforeAll(() => {
+    server.listen();
+  });
   beforeEach(() => {
+    server.resetHandlers();
     vi.clearAllTimers();
     vi.clearAllMocks();
     act(() => {
-      renderWithRouter(<App />, ['/1']);
+      wrappedComponent(<App />, ['/1']);
     });
+  });
+  afterAll(() => {
+    server.close();
   });
   test('Should have a search component', async () => {
     await waitFor(
@@ -32,12 +40,20 @@ describe('Check the main page content', () => {
   test('Should have a Pagination component', async () => {
     await waitFor(
       async () => {
-        const paginationContainer = await screen.findByTestId(
-          'pagination-container',
-        );
-        expect(paginationContainer).toBeDefined();
+        const prevButton = await screen.findByTestId('pagination-previous');
+        const nextButton = await screen.findByTestId('pagination-next');
+        expect(prevButton).toBeDefined();
+        expect(nextButton).toBeDefined();
       },
       { timeout: 5000 },
     );
+  });
+  test('Should have a saved products block if there are saved items', async () => {
+    const button = await screen.findByTestId('save-button-1');
+    act(() => {
+      fireEvent.click(button);
+    });
+    const savedItemsBlock = await screen.findByTestId('saved-products');
+    expect(savedItemsBlock).toBeDefined();
   });
 });

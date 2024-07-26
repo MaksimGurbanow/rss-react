@@ -1,6 +1,6 @@
 import { Product } from './../types/types';
 
-type ProductKeys = keyof Pick<
+export type ProductKeys = keyof Pick<
   Product,
   | 'brand'
   | 'description'
@@ -28,7 +28,7 @@ export default (items: Product[]) => {
   let csvContent = productKeys.join(',') + '\n';
 
   refinedItems.forEach((row) => {
-    csvContent += row.join(',') + '\n';
+    csvContent += row.map((item) => `"${item}"`).join(',') + '\n';
   });
 
   return csvContent;

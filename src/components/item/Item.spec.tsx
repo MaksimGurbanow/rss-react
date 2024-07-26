@@ -1,37 +1,33 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { App } from '../../App';
-import { getProductById } from '../../app/redux/slices/api';
 import Item from './Item';
 import capitalize from '../../utils/capitalize';
-import { renderWithRouter } from '../../App.spec';
+import { wrappedComponent } from '../../App.spec';
 import { mockItem } from '../../test/contants';
 import { act } from 'react';
+import { server } from '../../test/mockServer';
+import { productDetailsApi } from '../../app/redux/slices/productDetails';
 
 describe('Item', () => {
+  beforeAll(() => {
+    server.listen();
+  });
   beforeEach(() => {
     vi.clearAllMocks();
     vi.clearAllTimers();
-    vi.mock('../../app/api', () => ({
-      searchProducts: vi.fn(() => {
-        return Promise.resolve({
-          products: [mockItem],
-          total: 1,
-          skip: 0,
-          limit: 1,
-        });
-      }),
-      getProductById: vi.fn(() => {
-        return Promise.resolve(mockItem);
-      }),
-    }));
+    server.resetHandlers();
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
+  afterAll(() => {
+    server.close();
+  });
+
   test('Should render image and title (title is capitalized)', async () => {
-    renderWithRouter(
+    wrappedComponent(
       <Item title={mockItem.title} id={mockItem.id} images={mockItem.images} />,
       ['/1'],
     );
@@ -43,24 +39,28 @@ describe('Item', () => {
   });
 
   test('Should open details page if clicked', async () => {
-    renderWithRouter(<App />, ['/1']);
+    wrappedComponent(<App />, ['/1']);
 
-    const item = await screen.findByTestId('item-container');
-    fireEvent.click(item);
+    const item = await screen.findAllByTestId('item-container');
+    fireEvent.click(item[0]);
 
     const details = await screen.findByTestId('details-page');
     expect(details).toBeDefined();
   });
 
   test('Should triiger API call if click', async () => {
-    renderWithRouter(<App />, ['/1']);
+    const detailsPageSpy = vi.spyOn(
+      productDetailsApi.endpoints.getProductById,
+      'initiate',
+    );
+    wrappedComponent(<App />, ['/1']);
 
-    const item = await screen.findByTestId('item-container');
+    const item = await screen.findAllByTestId('item-container');
 
     await act(async () => {
-      fireEvent.click(item);
+      fireEvent.click(item[0]);
     });
 
-    expect(getProductById).toBeCalledTimes(1);
+    expect(detailsPageSpy).toBeCalledTimes(1);
   });
 });

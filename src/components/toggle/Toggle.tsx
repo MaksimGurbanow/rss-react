@@ -7,6 +7,7 @@ const Toggle = ({
   end,
   callback,
   defaultToggled = false,
+  testid,
 }: ToogleProps) => {
   const [toggled, setToggled] = useState<boolean>(defaultToggled);
   useEffect(() => {
@@ -17,7 +18,12 @@ const Toggle = ({
     if (callback) callback();
   };
   return (
-    <button className="toggle-button" type="button" onClick={handleCallback}>
+    <button
+      className="toggle-button"
+      type="button"
+      onClick={handleCallback}
+      data-testid={testid}
+    >
       <div className={`toggle-circle ${toggled && 'toggled'}`}>
         {toggled ? end.icon : initial.icon}
       </div>

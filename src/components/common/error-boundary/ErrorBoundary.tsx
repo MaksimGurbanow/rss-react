@@ -26,15 +26,13 @@ export default class ErrorBoundary extends React.Component<
     console.error(error, errorInfo);
   }
 
-  private emitFallback() {
-    if (this.props.fallback) return this.props.fallback();
-    return null;
-  }
-
   render() {
-    if (this.state.error) {
-      return this.emitFallback() || <h1>{this.state.error}</h1>;
-    }
+    if (this.props.fallback && this.state.error !== '')
+      return (
+        <div data-testid="error-boundary-fallback">{this.props.fallback()}</div>
+      );
+    if (this.state.error)
+      return <h1 data-testid="error-boundary-message">{this.state.error}</h1>;
 
     return this.props.children;
   }
