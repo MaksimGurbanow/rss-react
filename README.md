@@ -13,6 +13,7 @@ Project provides opportunity to test your application in two ways:
 
 ### Running tests in console:
 All you need is just run the command ```npm test```. Upon running this command, the test coverage and all passed and failed test will be shown
-<!-- TODO: finish description later -->
 ### Runnong test using UI:
-You can easily test your application with 
+You can easily test your application with ```npm run test:ui``` command to observe results of tests
+### Coverage:
+To get coverage percentage, run ```npm run coverage```
