@@ -1,0 +1,10 @@
+.items-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  height: auto;
+  margin: 20px;
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}

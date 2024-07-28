@@ -1,0 +1,11 @@
+.button {
+  background-color: var(--button-primary-color);
+  color: var(--text-primary-color);
+  font-weight: bold;
+  font-size: larger;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

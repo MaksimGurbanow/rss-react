@@ -1,0 +1,21 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  justify-content: space-evenly;
+  gap: 10px;
+  cursor: pointer;
+  width: clamp(200px, 25%, 300px);
+  text-align: center;
+  min-height: 500px;
+}
+
+.item-name:hover {
+  text-decoration: underline solid white 1px;
+}
+
+.item-image {
+  width: clamp(200px, 100%, 250px);
+}
