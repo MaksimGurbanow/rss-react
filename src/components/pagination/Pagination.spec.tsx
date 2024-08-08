@@ -1,6 +1,5 @@
 import { App } from '../../App';
 import { wrappedComponent } from '../../App.spec';
-import { mockItem, products } from '../../test/contants';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { server } from '../../test/mockServer';
 
@@ -19,7 +18,7 @@ describe('Pagination', () => {
   test('Should change URL upon clicking the buttons', async () => {
     let res = wrappedComponent(<App />, ['/1']);
 
-    let items = await screen.findAllByTestId('item-container');
+    await screen.findAllByTestId('item-container');
 
     let nextButton = await screen.findByTestId('pagination-next');
     act(() => {

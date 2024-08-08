@@ -1,9 +1,9 @@
 import './notFound.scss';
 import Button from '../../components/ui/button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const NotFound = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <div className="not-found-message" data-testid="not-found-page">
       <h3 data-testid="not-found-message">
@@ -13,7 +13,7 @@ const NotFound = () => {
 
       <Button
         className="not-found-button"
-        onClick={() => navigate('/1')}
+        onClick={() => router.push('main/1')}
         testid="not-found-button"
       >
         Move to main

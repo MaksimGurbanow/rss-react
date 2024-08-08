@@ -23,7 +23,9 @@ export interface ButtonProps extends BaseProps {
 
 export interface ItemProps
   extends Pick<Product, 'title' | 'images' | 'id'>,
-    BaseProps {}
+    BaseProps {
+  onClick?: (id: number) => void;
+}
 
 export interface SearchProps {
   onSearch: (value: string) => void;
@@ -41,8 +43,9 @@ export interface ItemDescriptionProps
 export type ItemDescriptionValues =
   ItemDescriptionProps[keyof ItemDescriptionProps];
 
-export interface ListProps {
+export interface ListProps extends BaseProps {
   items: Pick<Product, 'title' | 'images' | 'id'>[];
+  onClick: (id: number) => void;
 }
 
 export interface PaginationProps {

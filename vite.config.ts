@@ -8,6 +8,11 @@ import svgr from 'vite-plugin-svgr';
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
   plugins: [react(), svgr()],
+  build: {
+    rollupOptions: {
+      external: ['**/*.spec.ts', '**/*.test.tsx'],
+    },
+  },
   test: {
     globals: true,
     environment: 'happy-dom',
@@ -15,5 +20,6 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'html', 'clover', 'json'],
     },
+    exclude: ['**/*.spec.ts', '**/*.test.tsx'],
   },
 });

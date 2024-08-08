@@ -5,12 +5,11 @@ import {
   RenderResult,
   screen,
 } from '@testing-library/react';
-import WrappedApp, { App } from './App';
-import { MemoryRouter, Router } from 'react-router-dom';
+import  { App } from './App';
+import { MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import store from './app/redux/store';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { act } from 'react';
 

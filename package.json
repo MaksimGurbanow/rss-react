@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build --base=./",
-    "lint": "eslint src/**/*.{js,ts,jsx,tsx}",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,scss,css}\"",
     "precommit": "lint-staged",
     "prepare": "npx husky install",
@@ -19,8 +19,11 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.2.6",
+    "@svgr/webpack": "^8.1.0",
     "@types/es6-promise": "^3.3.0",
     "dotenv": "^16.4.5",
+    "next": "^14.2.5",
+    "next-svgr": "^0.0.2",
     "react": "^18.3.1",
     "react-bootstrap-icons": "^1.11.4",
     "react-dom": "^18.3.1",
@@ -54,11 +57,7 @@
     "msw": "^2.3.4",
     "prettier": "^3.3.2",
     "sass": "^1.77.8",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.1",
-    "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-svgr": "^4.2.0",
-    "vitest": "^2.0.2"
+    "typescript": "^5.2.2"
   },
   "husky": {
     "hooks": {

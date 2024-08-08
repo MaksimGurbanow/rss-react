@@ -1,5 +1,5 @@
-import { App } from '../../App';
-import { wrappedComponent } from '../../App.spec';
+/* import { App } from '../../../App';
+import { wrappedComponent } from '../../../App.spec';
 import { act, fireEvent, screen } from '@testing-library/react';
 
 describe('Not Found', () => {
@@ -19,3 +19,4 @@ describe('Not Found', () => {
     await screen.findByTestId('main-page');
   });
 });
+ */

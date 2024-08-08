@@ -1,24 +1,31 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGetProductByIdQuery } from '../../app/redux/slices/productDetails';
-import ItemDetails from '../../components/itemDetails/ItemDetails';
-import { useNavigate, useParams } from 'react-router-dom';
-import Button from '../../components/ui/button/Button';
-import Close from '../../assets/x-lg.svg?react';
-import Open from '../../assets/caret-left-fill.svg?react';
+import ItemDetails from '../itemDetails/ItemDetails';
+import Button from '../ui/button/Button';
+import Close from '../../assets/x-lg.svg';
+import Open from '../../assets/caret-left-fill.svg';
 import './details.scss';
-import Loader from '../../components/common/loader/Loader';
+import Loader from '../common/loader/Loader';
+import { useRouter } from 'next/router';
+import { Product } from '../../types/types';
 
-const Details = () => {
-  const { productId } = useParams();
-  const navigate = useNavigate();
-  const currentOrStoredProductId = useMemo(
-    () => productId || localStorage.getItem('productId'),
-    [productId],
-  );
+const Details = ({ product }: { product: Product }) => {
+  const { query, push, asPath } = useRouter();
+  const productId = query.id as string;
+  const [isMounted, setIsMounted] = useState(false);
+  const currentOrStoredProductId = useMemo(() => {
+    if (isMounted) {
+      return productId || localStorage.getItem('productId');
+    }
+    return productId;
+  }, []);
   const [opened, setOpened] = useState(!!currentOrStoredProductId);
-  const { data: product, isFetching } = useGetProductByIdQuery({
-    id: currentOrStoredProductId || '1',
-  });
+  const [isFetching, setIsFetching] = useState(true);
+
+  useEffect(() => setIsMounted(true), []);
+
+  useEffect(() => {
+    setIsFetching(false);
+  }, [product]);
 
   useEffect(() => {
     setOpened(!!productId);
@@ -39,7 +46,7 @@ const Details = () => {
         {isFetching && <Loader />}
         <Button
           onClick={() => {
-            navigate('../details');
+            push(`${asPath.split('/details')[0]}/details`);
             setOpened((prev) => !prev);
           }}
           disabled={!opened}

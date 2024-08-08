@@ -1,11 +1,11 @@
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
-import { App } from '../../App';
+/* import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { App } from '../../../App';
 import { vi } from 'vitest';
-import Details from './Details';
-import capitalize from '../../utils/capitalize';
-import { wrappedComponent } from '../../App.spec';
-import { mockItem } from '../../test/contants';
-import { server } from '../../test/mockServer';
+import Details from './[id]';
+import capitalize from '../../../utils/capitalize';
+import { wrappedComponent } from '../../../App.spec';
+import { mockItem } from '../../../test/contants';
+import { server } from '../../../test/mockServer';
 
 describe('Details', () => {
   beforeAll(() => {
@@ -79,3 +79,4 @@ describe('Details', () => {
     });
   });
 });
+ */

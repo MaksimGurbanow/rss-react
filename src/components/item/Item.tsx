@@ -1,7 +1,6 @@
 import './item.scss';
 import capitalize from '../../utils/capitalize';
 import { ItemProps } from '../../types/props';
-import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useMemo } from 'react';
 import store, { RootState } from '../../app/redux/store';
 import {
@@ -11,8 +10,7 @@ import {
 import { getProductById } from '../../app/api';
 import { useSelector } from 'react-redux';
 
-const Item = ({ title, images, id }: ItemProps) => {
-  const navigate = useNavigate();
+const Item = ({ title, images, id, onClick }: ItemProps) => {
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
   const isSaved = useMemo(
     () => savedProducts.some((product) => product.id === id),
@@ -26,7 +24,9 @@ const Item = ({ title, images, id }: ItemProps) => {
   return (
     <div
       className="item"
-      onClick={() => navigate(`details/${id}`)}
+      onClick={() => {
+        if (onClick) onClick(id);
+      }}
       data-testid="item-container"
     >
       <h3 className="item-name" data-testid="item-name">

@@ -1,15 +1,15 @@
 import Button from '../ui/button/Button';
-import { useNavigate } from 'react-router-dom';
 import './pagination.scss';
 import { PaginationProps } from '../../types/props';
+import { useRouter } from 'next/router';
 
 const Pagination = ({ page, total }: PaginationProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <>
       <Button
         className="pagination-pages__button previous"
-        onClick={() => navigate(`/${page - 1}`)}
+        onClick={() => router.push(`/main/${page - 1}`)}
         disabled={page <= 1}
         testid="pagination-previous"
       >
@@ -17,8 +17,8 @@ const Pagination = ({ page, total }: PaginationProps) => {
       </Button>
       <Button
         className="pagination-pages__button next"
-        disabled={page * import.meta.env.VITE_LIMIT > total}
-        onClick={() => navigate(`/${page + 1}`)}
+        disabled={page * process.env.NEXT_PUBLIC_LIMIT > total}
+        onClick={() => router.push(`/main/${page + 1}`)}
         testid="pagination-next"
       >
         Next
