@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    "next",
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
@@ -48,5 +49,8 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/no-anonymous-default-export': 'off',
+    '@next/next/no-title-in-document-head': 'off',
+    '@next/next/no-img-element': 'off'
   },
 };

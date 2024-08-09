@@ -11,7 +11,7 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
   const [query, setQuery] = useState(searchValue);
   const inputValueChanged = useMemo(
     () => searchValue !== query && !!(query || searchValue),
-    [query],
+    [query, searchValue],
   );
 
   const { theme, toggleTheme } = useThemeContext();

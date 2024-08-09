@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/dom';
-import { wrappedComponent } from '../../App.spec';
-import { products } from '../../test/contants';
-import List from './List';
+import { wrappedComponent } from '../index.test';
+import { products } from './contants';
+import List from '../components/list/List';
 
 describe('List', () => {
   beforeEach(() => {
@@ -20,5 +20,10 @@ describe('List', () => {
       const errorMessage = await screen.findByTestId('no-items-container');
       expect(errorMessage).toBeDefined();
     });
+  });
+
+  test('Should have container', async () => {
+    wrappedComponent(<List items={[]} />, ['/']);
+    expect(await screen.findByTestId('list-container')).toBeDefined();
   });
 });

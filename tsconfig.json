@@ -1,22 +1,3 @@
-// {
-//   "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
-//   "exclude": ["./node_modules"],
-//   "files": [],
-//   // "references": [
-//   //   {
-//   //     "path": "./tsconfig.app.json"
-//   //   },
-//   //   {
-//   //     "path": "./tsconfig.node.json"
-//   //   }
-//   // ],
-//   "compilerOptions": {
-//     "target": "ESNext",
-//     "sourceMap": true,
-//     "lib": ["ESNext"],
-//   },
-// }
-
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -38,8 +19,14 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "composite": true
   },
   "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
-  "exclude": ["./node_modules"]
+  "exclude": ["./node_modules"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

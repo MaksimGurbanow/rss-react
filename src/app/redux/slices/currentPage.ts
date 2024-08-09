@@ -3,7 +3,7 @@ import { DummyResponse } from '../../../types/types';
 import { GetProductsPageQueryParams } from '../types';
 
 export const currentPageApi = createApi({
-  reducerPath: 'api',
+  reducerPath: 'currentPageApi',
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_PAGE_URL }),
   endpoints: (builder) => ({
     getProductsPage: builder.query<DummyResponse, GetProductsPageQueryParams>({

@@ -5,20 +5,24 @@ import { ThemeProvider } from '../contexts/ThemeContext';
 import '../App.scss';
 import '../index.scss';
 import StoreProvider from '../app/redux/provider';
+import ErrorBoundary from '../components/common/error-boundary/ErrorBoundary';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+type AppPropsWithLayout = Pick<AppProps, 'Component' | 'pageProps'> & {
+  Component?: NextPageWithLayout;
 };
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout || ((page) => page);
+export default function App({ Component, pageProps = {} }: AppPropsWithLayout) {
   return (
-    <ThemeProvider>
-      <StoreProvider>{getLayout(<Component {...pageProps} />)}</StoreProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <StoreProvider>
+          {Component && <Component {...pageProps} />}
+        </StoreProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

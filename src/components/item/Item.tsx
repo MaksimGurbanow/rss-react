@@ -9,23 +9,25 @@ import {
 } from '../../app/redux/slices/savedProducts';
 import { getProductById } from '../../app/api';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
-const Item = ({ title, images, id, onClick }: ItemProps) => {
+const Item = ({ title, images, id }: ItemProps) => {
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
   const isSaved = useMemo(
     () => savedProducts.some((product) => product.id === id),
-    [savedProducts],
+    [id, savedProducts],
   );
-  const handleClick = (event: MouseEvent) => {
+  const saveItem = (event: MouseEvent) => {
     event.stopPropagation();
     if (isSaved) store.dispatch(removeProduct(id));
     else getProductById(id).then((item) => store.dispatch(addProduct(item)));
   };
+  const { replace, asPath } = useRouter();
   return (
     <div
       className="item"
       onClick={() => {
-        if (onClick) onClick(id);
+        replace(`${asPath.split('/details')[0]}/details/${id}`);
       }}
       data-testid="item-container"
     >
@@ -41,7 +43,7 @@ const Item = ({ title, images, id, onClick }: ItemProps) => {
         className="item-image"
         data-testid="item-image"
       />
-      <button onClick={handleClick} data-testid={`save-button-${id}`}>
+      <button onClick={saveItem} data-testid={`save-button-${id}`}>
         {isSaved ? 'Delete' : 'Save'}
       </button>
     </div>

@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { BaseProps } from '../types/props';
 
-type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
 
 export interface IThemeContext {
   theme: Theme;
@@ -33,7 +33,7 @@ export const ThemeProvider = ({ children }: BaseProps) => {
       localStorage.setItem('theme', prev === 'light' ? 'dark' : 'light');
       return prev === 'light' ? 'dark' : 'light';
     });
-  }, [theme]);
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

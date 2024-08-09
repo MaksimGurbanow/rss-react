@@ -11,13 +11,13 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { DummyResponse, Product } from '../../../types/types';
 import Details from '../../../components/details/Details';
+import { useMemo } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const page = Number(query.page) || 1;
   const search = (query.search as string) || '';
   const paths = (query.paths as string[]) || [];
-  console.log(paths);
   const isDetailsPage = Boolean((paths as string[])[0]);
   const productId = paths[1] || null;
   const productDetails =
@@ -35,24 +35,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       response,
       page,
       productDetails,
+      productId,
     },
   };
 };
 
 interface MainProps {
-  response: DummyResponse;
-  page: number;
-  productDetails: Product | null;
+  response?: DummyResponse;
+  page?: number;
+  productDetails?: Product | null;
+  productId?: string;
 }
 
-const Main = ({ response, page, productDetails }: MainProps) => {
+const Main = ({ response, page, productDetails, productId }: MainProps) => {
   const { searchQuery, update } = useSearchQuery();
-  const { push, asPath } = useRouter();
+  const { push } = useRouter();
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
 
-  const openDetails = (id: number) => {
-    push(`${asPath.split('/details')[0]}/details/${id}`);
-  };
+  const hasItems = useMemo(() => {
+    return Boolean(response?.products.length);
+  }, [response?.products.length]);
 
   return (
     <div data-testid="main-page">
@@ -63,17 +65,15 @@ const Main = ({ response, page, productDetails }: MainProps) => {
         }}
         searchValue={searchQuery}
       />
-      {productDetails && <Details product={productDetails} />}
-      {response && <List items={response.products} onClick={openDetails} />}
-      {!response && <Loader />}
-      {response && <Pagination page={page} total={response.total} />}
+      {productDetails && (
+        <Details product={productDetails} productId={productId} />
+      )}
+      {hasItems && response && <List items={response.products} />}
+      {!hasItems && <Loader />}
+      <Pagination page={page || 1} total={response?.total || 0} />
       {!!savedProducts.length && <SavedItems />}
     </div>
   );
-};
-
-Main.getLayout = (page: React.ReactNode) => {
-  return <div className="main-layout">{page}</div>;
 };
 
 export default Main;

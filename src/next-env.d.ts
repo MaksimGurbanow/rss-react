@@ -10,3 +10,8 @@ declare namespace NodeJS {
     NEXT_PUBLIC_API_PRODUCTS_URL: string;
   }
 }
+
+declare module "*.svg" {
+  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  export default content;
+}

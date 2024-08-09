@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Input from './Input';
+import Input from '../components/ui/input/Input';
 
 describe('Input Component', () => {
   test('Should change value upon typing', () => {

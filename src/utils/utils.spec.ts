@@ -34,7 +34,7 @@ describe('Pluralize', () => {
 describe('ConvertToCSV', () => {
   test('Should correctly convert to string', async () => {
     const unhandledResp = await fetch(
-      import.meta.env.VITE_API_PRODUCTS_URL + 'search?q=a',
+      'https://dummyjson.com/products/' + 'search?q=a',
     );
     const res: DummyResponse = await unhandledResp.json();
     expect(res).toHaveProperty('products');

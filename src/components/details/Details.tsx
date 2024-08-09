@@ -8,16 +8,21 @@ import Loader from '../common/loader/Loader';
 import { useRouter } from 'next/router';
 import { Product } from '../../types/types';
 
-const Details = ({ product }: { product: Product }) => {
-  const { query, push, asPath } = useRouter();
-  const productId = query.id as string;
+const Details = ({
+  product,
+  productId,
+}: {
+  product: Product;
+  productId?: string;
+}) => {
+  const { asPath, replace } = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const currentOrStoredProductId = useMemo(() => {
     if (isMounted) {
       return productId || localStorage.getItem('productId');
     }
     return productId;
-  }, []);
+  }, [isMounted, productId]);
   const [opened, setOpened] = useState(!!currentOrStoredProductId);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -46,7 +51,9 @@ const Details = ({ product }: { product: Product }) => {
         {isFetching && <Loader />}
         <Button
           onClick={() => {
-            push(`${asPath.split('/details')[0]}/details`);
+            replace(`${asPath.split('/details')[0]}/details`, undefined, {
+              shallow: true,
+            });
             setOpened((prev) => !prev);
           }}
           disabled={!opened}
@@ -57,7 +64,16 @@ const Details = ({ product }: { product: Product }) => {
       </div>
       <Button
         testid="open-details-button"
-        onClick={() => setOpened((prev) => !prev)}
+        onClick={() => {
+          replace(
+            `${asPath.split('/details')[0]}/details/${currentOrStoredProductId}`,
+            undefined,
+            {
+              shallow: true,
+            },
+          );
+          setOpened((prev) => !prev);
+        }}
         className={`open-details-button ${opened ? 'open-details-button__disabled' : ''}`}
       >
         <Open />
