@@ -1,20 +1,23 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import Input from '../ui/input/Input';
 import Button from '../ui/button/Button';
 import './search.scss';
-import { SearchProps } from '../../types/props';
 import Toggle from '../toggle/Toggle';
 import { BrightnessHighFill, MoonStarsFill } from 'react-bootstrap-icons';
 import { useThemeContext } from '../../contexts/ThemeContext';
+import { useRouter } from 'next/navigation';
+import { SearchProps } from '../../types/props';
 
-const Search = ({ searchValue, onSearch }: SearchProps) => {
+const Search = ({ searchValue }: SearchProps) => {
+  const router = useRouter();
   const [query, setQuery] = useState(searchValue);
-  const inputValueChanged = useMemo(
-    () => searchValue !== query && !!(query || searchValue),
+  const { theme, toggleTheme } = useThemeContext();
+  const valueChanged = useMemo(
+    () => query !== searchValue,
     [query, searchValue],
   );
-
-  const { theme, toggleTheme } = useThemeContext();
   return (
     <div className="search-field" data-testid="search-container">
       <Input
@@ -25,10 +28,13 @@ const Search = ({ searchValue, onSearch }: SearchProps) => {
       />
       <Button
         onClick={() => {
-          if (inputValueChanged) onSearch(query);
+          if (valueChanged) {
+            document.cookie = `searchQuery=${query}`;
+            router.refresh();
+          }
         }}
-        disabled={!inputValueChanged}
         testid="search-button"
+        disabled={!valueChanged}
       >
         Search
       </Button>

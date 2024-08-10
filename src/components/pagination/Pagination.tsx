@@ -1,29 +1,46 @@
 import Button from '../ui/button/Button';
 import './pagination.scss';
 import { PaginationProps } from '../../types/props';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-const Pagination = ({ page, total }: PaginationProps) => {
-  const router = useRouter();
+const Pagination = ({ total, page }: PaginationProps) => {
+  const limit = Number(process.env.NEXT_PUBLIC_LIMIT) || 10;
+
   return (
-    <>
+    <div className="pagination">
       <Button
         className="pagination-pages__button previous"
-        onClick={() => router.push(`/main/${page - 1}`)}
         disabled={page <= 1}
         testid="pagination-previous"
       >
-        Previous
+        {page > 1 ? (
+          <Link href={`/main/${page - 1}`} className="pagination-link">
+            Previous
+          </Link>
+        ) : (
+          'Previous'
+        )}
       </Button>
-      <Button
-        className="pagination-pages__button next"
-        disabled={page * process.env.NEXT_PUBLIC_LIMIT > total}
-        onClick={() => router.push(`/main/${page + 1}`)}
-        testid="pagination-next"
-      >
-        Next
-      </Button>
-    </>
+      {page * limit < total ? (
+        <Link href={`/main/${page + 1}`} className="pagination-link">
+          <Button
+            className="pagination-pages__button next"
+            disabled={page * limit >= total}
+            testid="pagination-next"
+          >
+            Next
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          className="pagination-pages__button next"
+          disabled={page * limit >= total}
+          testid="pagination-next"
+        >
+          Next
+        </Button>
+      )}
+    </div>
   );
 };
 

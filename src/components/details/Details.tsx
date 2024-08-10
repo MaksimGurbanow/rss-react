@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import ItemDetails from '../itemDetails/ItemDetails';
 import Button from '../ui/button/Button';
@@ -5,7 +7,7 @@ import Close from '../../assets/x-lg.svg';
 import Open from '../../assets/caret-left-fill.svg';
 import './details.scss';
 import Loader from '../common/loader/Loader';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { Product } from '../../types/types';
 
 const Details = ({
@@ -15,7 +17,8 @@ const Details = ({
   product: Product;
   productId?: string;
 }) => {
-  const { asPath, replace } = useRouter();
+  const { replace } = useRouter();
+  const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
   const currentOrStoredProductId = useMemo(() => {
     if (isMounted) {
@@ -51,8 +54,8 @@ const Details = ({
         {isFetching && <Loader />}
         <Button
           onClick={() => {
-            replace(`${asPath.split('/details')[0]}/details`, undefined, {
-              shallow: true,
+            replace(`${pathname.split('/details')[0]}/details`, {
+              scroll: false,
             });
             setOpened((prev) => !prev);
           }}
@@ -66,10 +69,9 @@ const Details = ({
         testid="open-details-button"
         onClick={() => {
           replace(
-            `${asPath.split('/details')[0]}/details/${currentOrStoredProductId}`,
-            undefined,
+            `${pathname.split('/details')[0]}/details/${currentOrStoredProductId}`,
             {
-              shallow: true,
+              scroll: false,
             },
           );
           setOpened((prev) => !prev);

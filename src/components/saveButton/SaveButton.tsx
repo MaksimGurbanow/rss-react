@@ -1,11 +1,15 @@
 'use client';
 
 import { MouseEvent } from 'react';
-import store from '../../redux/store';
+import store, { RootState } from '../../redux/store';
 import { addProducts, removeProduct } from '../../redux/slices/savedProducts';
 import { Product } from '../../types/types';
+import { useSelector } from 'react-redux';
 
-const SaveButton = ({ id, isSaved }: { isSaved?: boolean; id: number }) => {
+const SaveButton = ({ id }: { id: number }) => {
+  const savedProducts = useSelector((state: RootState) => state.savedProducts);
+  const isSaved = !!savedProducts.find((product) => product.id === id);
+
   const handleClick = (e: MouseEvent) => {
     e.stopPropagation();
     if (isSaved) {

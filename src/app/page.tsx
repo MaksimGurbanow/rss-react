@@ -1,8 +1,11 @@
-import { cookies } from 'next/headers';
-const cookiesStore = cookies();
+import Link from 'next/link';
+
 const App = () => {
-  console.log(cookiesStore.get('saved')?.value);
-  return <div>hello</div>;
+  return (
+    <h3>
+      Hello, you can move <Link href="/main/1">Here</Link>
+    </h3>
+  );
 };
 
 export default App;

@@ -23,11 +23,13 @@ export interface ButtonProps extends BaseProps {
 
 export interface ItemProps
   extends Pick<Product, 'title' | 'images' | 'id'>,
-    BaseProps {}
+    BaseProps {
+  detailsPath: string;
+}
 
 export interface SearchProps {
-  onSearch: (value: string) => void;
-  searchValue: string;
+  onSearch?: (value: string) => void;
+  searchValue?: string;
 }
 
 export interface ItemPropertyProps {
@@ -43,11 +45,12 @@ export type ItemDescriptionValues =
 
 export interface ListProps extends BaseProps {
   items: Pick<Product, 'title' | 'images' | 'id'>[];
+  detailsPath: string;
 }
 
 export interface PaginationProps {
-  page: number;
   total: number;
+  page: number;
 }
 
 export interface ItemDetailsProps extends Product, BaseProps {}

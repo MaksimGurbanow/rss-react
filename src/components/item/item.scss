@@ -10,6 +10,11 @@
   width: clamp(200px, 25%, 300px);
   text-align: center;
   min-height: 500px;
+
+  &-link {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 .item-name:hover {
