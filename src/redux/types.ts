@@ -1,4 +1,4 @@
-import { DummyResponse } from '../../types/types';
+import { DummyResponse } from '../types/types';
 
 export interface GetProductsPageQueryParams {
   page: number;

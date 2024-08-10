@@ -1,6 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Product } from '../../../types/types';
+import { Product } from '../../types/types';
 import { GetProductByIdQueryParams } from '../types';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+export const getProductById = createAsyncThunk(
+  'detailsApi/getProductById',
+  async (productId: string | number) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_PRODUCTS_URL}${productId}`,
+    );
+    return await response.json();
+  },
+);
 
 export const productDetailsApi = createApi({
   reducerPath: 'detailsApi',

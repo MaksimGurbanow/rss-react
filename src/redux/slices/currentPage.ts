@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { DummyResponse } from '../../../types/types';
+import { DummyResponse } from '../../types/types';
 import { GetProductsPageQueryParams } from '../types';
 
 export const currentPageApi = createApi({

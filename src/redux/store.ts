@@ -1,3 +1,5 @@
+'use client';
+
 import { configureStore } from '@reduxjs/toolkit';
 import { savedProductsSlice } from './slices/savedProducts';
 import { currentPageApi } from './slices/currentPage';

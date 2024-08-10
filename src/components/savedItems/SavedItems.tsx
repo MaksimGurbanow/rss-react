@@ -1,21 +1,38 @@
-import { useSelector } from 'react-redux';
+'use client';
+
 import List from '../list/List';
 import './savedItems.scss';
-import store, { RootState } from '../../app/redux/store';
 import pluralize from '../../utils/pluralize';
 import Button from '../ui/button/Button';
-import { unsellectAll } from '../../app/redux/slices/savedProducts';
 import convertToCSV from '../../utils/convertToCSV';
-import { useMemo } from 'react';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import store, { RootState } from '../../redux/store';
+import { useEffect } from 'react';
+import { addProducts, unsellectAll } from '../../redux/slices/savedProducts';
+import { Product } from '../../types/types';
+
 const SavedItems = () => {
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
-  const blob = useMemo(
-    () =>
-      new Blob([convertToCSV(savedProducts)], {
-        type: 'text/csv;charset=utf-8,',
-      }),
-    [savedProducts],
-  );
+  const blob = () =>
+    new Blob([convertToCSV(savedProducts)], {
+      type: 'text/csv;charset=utf-8,',
+    });
+
+  useEffect(() => {
+    fetch('/api/savedProducts')
+      .then((res) => res.json())
+      .then((res: { products: Product[] }) => {
+        store.dispatch(addProducts(res.products));
+      });
+  }, []);
+
+  const handleUnselectAll = async () => {
+    await fetch('/api/savedProducts/all', {
+      method: 'DELETE',
+    }).then(() => store.dispatch(unsellectAll()));
+  };
+  if (!savedProducts.length) return;
   return (
     <div className="saved-products-block" data-testid="saved-products">
       <h2 className="saved-products-header">Saved items</h2>
@@ -25,18 +42,14 @@ const SavedItems = () => {
       </h3>
       <List items={savedProducts} />
       <div className="saved-products-controllers">
-        <Button onClick={() => store.dispatch(unsellectAll())}>
-          Unselect all
-        </Button>
-        <Button className="saved-products-download">
-          <a
-            className="saved-products-download-link"
-            href={URL.createObjectURL(blob)}
-            download={`${savedProducts.length}_products.csv`}
-          >
-            Download
-          </a>
-        </Button>
+        <Button onClick={handleUnselectAll}>Unselect all</Button>
+        <Link
+          className="saved-products-download-link"
+          href={URL.createObjectURL(blob())}
+          download={`${savedProducts.length}_products.csv`}
+        >
+          <Button className="saved-products-download">Download</Button>
+        </Link>
       </div>
     </div>
   );

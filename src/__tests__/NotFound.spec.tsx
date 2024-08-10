@@ -1,6 +1,6 @@
 import { act, fireEvent, screen } from '@testing-library/react';
 import { wrappedComponent } from '../index.test';
-import NotFound from '../pages/404';
+import NotFound from '../app/not-found';
 import Main from '../pages/main/[page]/[[...paths]]';
 
 describe('Not Found', () => {

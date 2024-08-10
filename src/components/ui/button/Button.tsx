@@ -1,25 +1,24 @@
+'use client';
+
 import './button.scss';
 import { ButtonProps } from '../../../types/props';
 
 const Button = ({
-  onClick,
   type,
   className,
   children,
   style,
   disabled = false,
   testid,
+  onClick,
 }: ButtonProps) => {
-  const handleClick = () => {
-    if (onClick) onClick();
-  };
   return (
     <button
       type={type || 'button'}
-      onClick={handleClick}
       className={`button ${disabled ? 'disabled' : ''} ${className}`}
       style={style}
       disabled={disabled}
+      onClick={onClick}
       data-testid={testid}
     >
       {children}

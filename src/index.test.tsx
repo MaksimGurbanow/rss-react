@@ -4,7 +4,7 @@ import App from './pages/_app';
 import { act, ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import Main from './pages/main/[page]/[[...paths]]';
-import NotFound from './pages/404';
+import NotFound from './app/not-found';
 import { server } from './__tests__/mockServer';
 
 export const wrappedComponent = (
