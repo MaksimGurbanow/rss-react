@@ -12,6 +12,7 @@ describe('Search', () => {
   });
   afterEach(() => {
     server.resetHandlers();
+    vi.clearAllMocks();
   });
   afterAll(() => {
     server.close();
@@ -27,10 +28,6 @@ describe('Search', () => {
     expect(button).toBeDefined();
     expect(toggle).toBeDefined();
     expect(container).toBeDefined();
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 
   test('Input should change value if is typed', async () => {

@@ -8,12 +8,9 @@ describe('Check the main page content', () => {
     server.listen();
     window.URL.createObjectURL = vi.fn();
   });
-  beforeEach(() => {
+  afterEach(() => {
     server.resetHandlers();
     vi.clearAllTimers();
-    vi.clearAllMocks();
-  });
-  afterEach(() => {
     vi.clearAllMocks();
   });
   afterAll(() => {
@@ -40,8 +37,6 @@ describe('Check the main page content', () => {
       { timeout: 5000 },
     );
   });
-  beforeEach(() => {});
-  afterEach(() => {});
 
   test('Should have a Pagination component', async () => {
     wrappedComponent(await Main({ params: { page: '1' } }));

@@ -1,4 +1,4 @@
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { server } from './mockServer';
 import { routedComponent, wrappedComponent } from './index.test';
@@ -6,8 +6,6 @@ import Details from '../components/details/Details';
 import { mockItem } from './contants';
 import { Product } from '../types/types';
 import capitalize from '../utils/capitalize';
-import mockRouter from 'next-router-mock';
-import { useRouter } from 'next/navigation';
 
 describe('Details', () => {
   beforeAll(() => {

@@ -6,6 +6,7 @@ import mockRouter from 'next-router-mock';
 import StoreProvider from '../redux/provider';
 import DefinedComponent from './utils/defineComponent';
 import { ThemeProvider } from '../contexts/ThemeContext';
+import { server } from './mockServer';
 
 const MockRouter = ({ path }: { path: string }) => {
   const [component, setComponent] = useState<ReactNode | null>(null);
@@ -87,6 +88,15 @@ describe('Details page', () => {
 describe('Theme component should work correctly', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+  beforeAll(() => {
+    server.listen();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+  afterAll(() => {
+    server.close();
   });
   test('Should have a theme wrapper', async () => {
     routedComponent('/main/1');
