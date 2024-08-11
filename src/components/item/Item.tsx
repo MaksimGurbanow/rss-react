@@ -1,18 +1,22 @@
-'use client';
-
 import './item.scss';
 import capitalize from '../../utils/capitalize';
 import { ItemProps } from '../../types/props';
 import SaveButton from '../saveButton/SaveButton';
-import { useRouter } from 'next/navigation';
+import { useLocation, useNavigate } from '@remix-run/react';
+import formatAddress from '../../utils/formatAddress';
 
-const Item = ({ title, images, id, detailsPath }: ItemProps) => {
-  const { push } = useRouter();
+const Item = ({ title, images, id }: ItemProps) => {
+  const { pathname, search } = useLocation();
+  const navigate = useNavigate();
   return (
     <div
       className="item"
       data-testid="item-container"
-      onClick={() => push(detailsPath + id)}
+      onClick={() => {
+        navigate(
+          formatAddress({ search, pathname, includeDetails: true, newId: id }),
+        );
+      }}
     >
       <h3 className="item-name" data-testid="item-name">
         {capitalize(title)}

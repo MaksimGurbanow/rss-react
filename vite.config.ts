@@ -1,13 +1,18 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import { vitePlugin as remix } from '@remix-run/dev';
 
 // https://vitejs.dev/config/
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [
+    remix({
+      appDirectory: './src/app',
+    }),
+    svgr(),
+  ],
   build: {
     rollupOptions: {
       external: ['**/*.spec.ts', '**/*.test.tsx'],

@@ -1,11 +1,20 @@
 import Button from '../ui/button/Button';
 import './pagination.scss';
 import { PaginationProps } from '../../types/props';
-import Link from 'next/link';
+import { json, Link, useLoaderData, useLocation } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/node';
+import formatAddress from '../../utils/formatAddress';
 
-const Pagination = ({ total, page }: PaginationProps) => {
-  const limit = Number(process.env.NEXT_PUBLIC_LIMIT) || 10;
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  const page = Number(params.page);
+  const searchQuery =
+    new URL(request?.url).searchParams.get('searchQuery') || '';
+  return json({ limit: 10, page, searchQuery });
+};
 
+const Pagination = ({ total }: PaginationProps) => {
+  const { searchQuery = '', page, limit = 10 } = useLoaderData<typeof loader>();
+  const { pathname } = useLocation();
   return (
     <div className="pagination">
       <Button
@@ -14,7 +23,14 @@ const Pagination = ({ total, page }: PaginationProps) => {
         testid="pagination-previous"
       >
         {page > 1 ? (
-          <Link href={`/main/${page - 1}`} className="pagination-link">
+          <Link
+            to={formatAddress({
+              query: searchQuery,
+              pathname,
+              newPage: page - 1,
+            })}
+            className="pagination-link"
+          >
             Previous
           </Link>
         ) : (
@@ -22,7 +38,14 @@ const Pagination = ({ total, page }: PaginationProps) => {
         )}
       </Button>
       {page * limit < total ? (
-        <Link href={`/main/${page + 1}`} className="pagination-link">
+        <Link
+          to={formatAddress({
+            query: searchQuery,
+            pathname,
+            newPage: page + 1,
+          })}
+          className="pagination-link"
+        >
           <Button
             className="pagination-pages__button next"
             disabled={page * limit >= total}

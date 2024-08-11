@@ -1,5 +1,3 @@
-'use client';
-
 import './button.scss';
 import { ButtonProps } from '../../../types/props';
 

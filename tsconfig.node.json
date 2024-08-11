@@ -9,7 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals", "@types/react", "@types/react-dom"]
+    "types": ["vitest/globals", "@types/react", "@types/react-dom", "./src/remix-env.d.ts"]
   },
   "include": ["vite.config.ts", "src"],
 }

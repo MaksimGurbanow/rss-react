@@ -24,7 +24,6 @@ export interface ButtonProps extends BaseProps {
 export interface ItemProps
   extends Pick<Product, 'title' | 'images' | 'id'>,
     BaseProps {
-  detailsPath: string;
 }
 
 export interface SearchProps {
@@ -45,7 +44,6 @@ export type ItemDescriptionValues =
 
 export interface ListProps extends BaseProps {
   items: Pick<Product, 'title' | 'images' | 'id'>[];
-  detailsPath?: string;
 }
 
 export interface PaginationProps {

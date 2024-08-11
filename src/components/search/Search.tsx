@@ -1,23 +1,26 @@
-'use client';
-
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Input from '../ui/input/Input';
 import Button from '../ui/button/Button';
 import './search.scss';
 import Toggle from '../toggle/Toggle';
 import { BrightnessHighFill, MoonStarsFill } from 'react-bootstrap-icons';
 import { useThemeContext } from '../../contexts/ThemeContext';
-import { useRouter } from 'next/navigation';
 import { SearchProps } from '../../types/props';
+import { useLocation, useNavigate } from '@remix-run/react';
+import formatAddress from '../../utils/formatAddress';
 
-const Search = ({ searchValue }: SearchProps) => {
-  const router = useRouter();
-  const [query, setQuery] = useState(searchValue);
+const Search = ({ searchValue, onSearch }: SearchProps) => {
+  const [query, setQuery] = useState(searchValue || '');
   const { theme, toggleTheme } = useThemeContext();
   const valueChanged = useMemo(
     () => query !== searchValue,
     [query, searchValue],
   );
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    setQuery(searchValue || '');
+  }, [searchValue]);
   return (
     <div className="search-field" data-testid="search-container">
       <Input
@@ -27,14 +30,14 @@ const Search = ({ searchValue }: SearchProps) => {
         testid="search-input"
       />
       <Button
-        onClick={() => {
-          if (valueChanged) {
-            document.cookie = `searchQuery=${query}`;
-            router.refresh();
-          }
-        }}
         testid="search-button"
         disabled={!valueChanged}
+        onClick={() => {
+          if (valueChanged && onSearch) {
+            onSearch(query as string);
+            navigate(formatAddress({ query, pathname, newPage: 1 }));
+          }
+        }}
       >
         Search
       </Button>

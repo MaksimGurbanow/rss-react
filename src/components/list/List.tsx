@@ -3,7 +3,7 @@ import './list.scss';
 import { ListProps } from '../../types/props';
 import NoItemsMessage from '../noItemsMessage/NoItemsMessage';
 
-const List = ({ items, detailsPath }: ListProps) => {
+const List = ({ items }: ListProps) => {
   return (
     <div className="items-list" data-testid="list-container">
       {items.length ? (
@@ -13,7 +13,6 @@ const List = ({ items, detailsPath }: ListProps) => {
             images={item.images}
             key={item.id}
             id={item.id}
-            detailsPath={detailsPath as string}
           />
         ))
       ) : (

@@ -2,10 +2,9 @@ import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { server } from './mockServer';
 import { routedComponent, wrappedComponent } from './index.test';
-import Details from '../components/details/Details';
 import { mockItem } from './contants';
-import { Product } from '../types/types';
 import capitalize from '../utils/capitalize';
+import Details from '../app/routes/main.$page.details.($id)/route';
 
 describe('Details', () => {
   beforeAll(() => {
@@ -36,12 +35,12 @@ describe('Details', () => {
   });
 
   test('Should contain open button if details are closed', async () => {
-    wrappedComponent(<Details product={mockItem as Product} productId="1" />);
+    wrappedComponent(<Details product={mockItem} productId="1" />);
     expect(await screen.findByTestId('open-details-button')).toBeDefined();
   });
 
   test('Should render appropriate data', async () => {
-    wrappedComponent(<Details product={mockItem as Product} productId="1" />);
+    wrappedComponent(<Details product={mockItem} productId="1" />);
     await waitFor(
       async () => {
         const itemName = await screen.findByTestId('item-details-name');
