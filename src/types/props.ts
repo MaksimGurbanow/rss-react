@@ -45,7 +45,7 @@ export type ItemDescriptionValues =
 
 export interface ListProps extends BaseProps {
   items: Pick<Product, 'title' | 'images' | 'id'>[];
-  detailsPath: string;
+  detailsPath?: string;
 }
 
 export interface PaginationProps {

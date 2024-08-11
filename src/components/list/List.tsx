@@ -13,7 +13,7 @@ const List = ({ items, detailsPath }: ListProps) => {
             images={item.images}
             key={item.id}
             id={item.id}
-            detailsPath={detailsPath}
+            detailsPath={detailsPath as string}
           />
         ))
       ) : (

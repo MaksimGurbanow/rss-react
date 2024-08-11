@@ -1,12 +1,13 @@
-import { screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { server } from './mockServer';
-import { wrappedComponent } from '../index.test';
+import { routedComponent, wrappedComponent } from './index.test';
 import Details from '../components/details/Details';
-import Main from '../pages/main/[page]/[[...paths]]';
-import { mockItem, products } from './contants';
+import { mockItem } from './contants';
 import { Product } from '../types/types';
 import capitalize from '../utils/capitalize';
+import mockRouter from 'next-router-mock';
+import { useRouter } from 'next/navigation';
 
 describe('Details', () => {
   beforeAll(() => {
@@ -25,62 +26,24 @@ describe('Details', () => {
   });
 
   test('Should render while data is not fetched yet', async () => {
-    wrappedComponent(
-      <Main
-        page={1}
-        response={{
-          products: products as Product[],
-          limit: 10,
-          total: 10,
-          skip: 0,
-        }}
-        productDetails={mockItem as Product}
-      />,
-      ['/main/1/details/1'],
-    );
+    routedComponent('/main/1/details/1');
     const details = await screen.findByTestId('details-page');
     expect(details).toBeDefined();
   });
 
   test('Should contain close button', async () => {
-    wrappedComponent(
-      <Main
-        page={1}
-        response={{
-          products: products as Product[],
-          limit: 10,
-          total: 10,
-          skip: 0,
-        }}
-        productDetails={mockItem as Product}
-      />,
-      ['/main/1/details/1'],
-    );
+    routedComponent('/main/1/details/1');
     const button = await screen.findByTestId('details-close-button');
     expect(button).toBeDefined();
   });
 
   test('Should contain open button if details are closed', async () => {
-    wrappedComponent(
-      <Main
-        page={1}
-        response={{
-          products: products as Product[],
-          limit: 10,
-          total: 10,
-          skip: 0,
-        }}
-        productDetails={mockItem as Product}
-      />,
-      ['/main/1/details/1'],
-    );
+    wrappedComponent(<Details product={mockItem as Product} productId="1" />);
     expect(await screen.findByTestId('open-details-button')).toBeDefined();
   });
 
   test('Should render appropriate data', async () => {
-    wrappedComponent(<Details product={mockItem as Product} productId="1" />, [
-      '/main/1/details/1',
-    ]);
+    wrappedComponent(<Details product={mockItem as Product} productId="1" />);
     await waitFor(
       async () => {
         const itemName = await screen.findByTestId('item-details-name');

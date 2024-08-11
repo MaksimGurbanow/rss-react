@@ -1,7 +1,7 @@
-import { currentPageApi } from '../app/redux/slices/currentPage';
-import { productDetailsApi } from '../app/redux/slices/productDetails';
-import { addProduct, removeProduct } from '../app/redux/slices/savedProducts';
-import store from '../app/redux/store';
+import { currentPageApi } from '../redux/slices/currentPage';
+import { productDetailsApi } from '../redux/slices/productDetails';
+import { addProducts, removeProduct } from '../redux/slices/savedProducts';
+import store from '../redux/store';
 import { Product } from '../types/types';
 import { mockItem } from './contants';
 
@@ -34,13 +34,13 @@ describe('Save products', async () => {
         id: 1,
       }),
     );
-    store.dispatch(addProduct(data as Product));
+    store.dispatch(addProducts([data] as Product[]));
 
     expect(store.getState().savedProducts[0]).toBeDefined();
   });
 
   test('Should delete product', async () => {
-    store.dispatch(addProduct(mockItem as Product));
+    store.dispatch(addProducts([mockItem] as Product[]));
     store.dispatch(removeProduct(1));
     expect(store.getState().savedProducts[0]).toBeUndefined();
   });

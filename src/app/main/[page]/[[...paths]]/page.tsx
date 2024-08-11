@@ -11,19 +11,18 @@ import getProductById from '../../../../api/getProductById';
 const Main = async ({
   params,
 }: {
-  params: { page: string; paths: string[] };
+  params: { page: string; paths?: string[] };
 }) => {
   const { page, paths } = params;
 
   const [detailsPath, detailsId] = paths || [];
 
-  const cookiewStore = cookies();
-  const searchQuery = cookiewStore.get('searchQuery')?.value || '';
+  const cookieStore = cookies();
+  const searchQuery = cookieStore.get('searchQuery')?.value || '';
   const { total, products } = await getProducts({
     query: searchQuery,
     page: Number(page),
   });
-
   const productDetails =
     detailsPath && detailsId && (await getProductById(detailsId));
 
@@ -37,7 +36,7 @@ const Main = async ({
         <List items={products} detailsPath={`/main/${page}/details/`} />
       )}
       <Pagination total={total || 0} page={Number(page)} />
-      <SavedItems />
+      <SavedItems detailsPath={`/main/${page}/details/`} />
     </div>
   );
 };

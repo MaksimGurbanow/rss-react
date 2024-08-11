@@ -1,22 +1,30 @@
 import { act, fireEvent, screen } from '@testing-library/react';
-import { wrappedComponent } from '../index.test';
-import NotFound from '../app/not-found';
-import Main from '../pages/main/[page]/[[...paths]]';
+import { routedComponent } from './index.test';
+import mockRouter from 'next-router-mock';
+import { server } from './mockServer';
 
 describe('Not Found', () => {
-  beforeEach(() => {});
+  beforeAll(() => {
+    server.listen();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+  afterAll(() => {
+    server.close();
+  });
   test('Should contain message', async () => {
-    wrappedComponent(<NotFound />, ['/wrong-path']);
+    routedComponent('/wrong-path');
     await screen.findByTestId('not-found-message');
   });
 
   test('Should redirect to Main page upon clicking', async () => {
-    wrappedComponent(<NotFound />, ['/wrong-path']);
+    routedComponent('/wrong-path');
     const button = await screen.findByTestId('not-found-button');
-    act(() => {
+    await act(async () => {
       fireEvent.click(button);
+      await mockRouter.push('/main/1');
     });
-    wrappedComponent(<Main />, ['/mian/1']);
     await screen.findByTestId('main-page');
   });
 });

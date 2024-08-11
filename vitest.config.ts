@@ -32,18 +32,21 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['vitestSetup.ts'],
+    setupFiles: ['./src/__tests__/vitestSetup.ts'],
     coverage: {
       provider: 'istanbul',
       reporter: ['text', 'html', 'clover', 'json'],
       exclude: [
         'next.config.mjs',
-        'src/pages/_document.tsx',
+        '**/*data.ts',
+        'src/app/layout.tsx',
+        'src/app/page.tsx',
+        '**/*route.ts',
         ...coverageConfigDefaults.exclude,
       ],
     },
     env: {
-      ...config({ path: '.env' }).parsed,
+      ...config({ path: ['.env', '.env.test'] }).parsed,
     },
   },
 });

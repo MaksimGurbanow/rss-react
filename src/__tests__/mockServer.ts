@@ -14,6 +14,18 @@ export const handlers = [
   http.get(`${process.env.NEXT_PUBLIC_API_PRODUCTS_URL}1`, () => {
     return HttpResponse.json(mockItem);
   }),
+
+  http.get('/api/savedProducts', () => {
+    return HttpResponse.json({
+      products: [],
+    });
+  }),
+
+  http.put('/api/savedProducts', () => {
+    return HttpResponse.json({
+      product: mockItem,
+    });
+  }),
 ];
 
 export const server = setupServer(...handlers);

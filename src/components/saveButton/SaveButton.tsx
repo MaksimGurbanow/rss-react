@@ -5,6 +5,7 @@ import store, { RootState } from '../../redux/store';
 import { addProducts, removeProduct } from '../../redux/slices/savedProducts';
 import { Product } from '../../types/types';
 import { useSelector } from 'react-redux';
+import './saveButton.scss';
 
 const SaveButton = ({ id }: { id: number }) => {
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
@@ -37,7 +38,11 @@ const SaveButton = ({ id }: { id: number }) => {
     }
   };
   return (
-    <button onClick={handleClick} data-testid={`save-button-${id}`}>
+    <button
+      onClick={handleClick}
+      data-testid={`save-button-${id}`}
+      className="save-button"
+    >
       {isSaved ? 'Delete' : 'Save'}
     </button>
   );

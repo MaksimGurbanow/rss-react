@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { addProducts, unsellectAll } from '../../redux/slices/savedProducts';
 import { Product } from '../../types/types';
 
-const SavedItems = () => {
+const SavedItems = ({ detailsPath }: { detailsPath: string }) => {
   const savedProducts = useSelector((state: RootState) => state.savedProducts);
   const blob = () =>
     new Blob([convertToCSV(savedProducts)], {
@@ -40,7 +40,7 @@ const SavedItems = () => {
         {savedProducts.length} {pluralize('item', savedProducts.length)}{' '}
         selected.
       </h3>
-      <List items={savedProducts} />
+      <List items={savedProducts} detailsPath={detailsPath} />
       <div className="saved-products-controllers">
         <Button onClick={handleUnselectAll}>Unselect all</Button>
         <Link
