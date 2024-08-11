@@ -3,7 +3,7 @@ import { DummyResponse } from '../types/types';
 const getProducts = async ({
   query,
   page,
-  limit = 10,
+  limit = process.env.NEXT_PUBLIC_LIMIT,
 }: {
   query: string;
   page: number;
