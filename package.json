@@ -7,7 +7,7 @@
     "dev": "remix vite:dev",
     "build": "remix vite:build",
     "start": "remix-serve build/server/index.js",
-    "lint": "vite lint --dir ./src ",
+    "lint": "eslint src/**/*.{js,ts,jsx,tsx}",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,js,jsx,scss,css}\"",
     "precommit": "lint-staged",
     "prepare": "npx husky install",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.1",
+    "@remix-run/testing": "^2.11.1",
     "@storybook/addon-actions": "^8.2.8",
     "@svgr/cli": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",

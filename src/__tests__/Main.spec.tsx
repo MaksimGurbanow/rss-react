@@ -1,7 +1,10 @@
 import { screen, waitFor } from '@testing-library/dom';
-import { wrappedComponent, routedComponent } from './index.test';
+import { wrappedComponent } from './index.test';
 import { server } from './mockServer';
-import Main from '../app/main/[page]/[[...paths]]/page';
+import RemixStub from './remixMockRouter';
+import { loader } from '../app/routes/main.$page/route';
+import { AppLoadContext } from '@remix-run/node';
+import { LoaderFunctionArgs } from 'react-router-dom';
 
 describe('Check the main page content', () => {
   beforeAll(() => {
@@ -17,7 +20,7 @@ describe('Check the main page content', () => {
     server.close();
   });
   test('Should have a search component', async () => {
-    wrappedComponent(await Main({ params: { page: '1' } }));
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
     await waitFor(
       async () => {
         const searchContainer = await screen.findByTestId('search-container');
@@ -27,7 +30,7 @@ describe('Check the main page content', () => {
     );
   });
   test('Should have a List component', async () => {
-    wrappedComponent(await Main({ params: { page: '1' } }));
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
 
     await waitFor(
       async () => {
@@ -39,7 +42,7 @@ describe('Check the main page content', () => {
   });
 
   test('Should have a Pagination component', async () => {
-    wrappedComponent(await Main({ params: { page: '1' } }));
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
 
     await waitFor(
       async () => {
@@ -52,12 +55,25 @@ describe('Check the main page content', () => {
     );
   });
   test('Should have details component if details are provided', async () => {
-    routedComponent('/main/1/details/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1/details/1']} />);
+
     expect(await screen.findByTestId('details-page')).toBeDefined();
   });
   test("Shouldn't have details component if they are not provided", async () => {
-    wrappedComponent(await Main({ params: { page: '1' } }));
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
 
     expect(screen.queryByTestId('details-page')).toBeNull();
+  });
+});
+
+describe('loader', async () => {
+  test('Should return data', async () => {
+    expect(
+      await loader({
+        params: { page: '1' },
+        request: {} as Request,
+        context: {},
+      }),
+    ).toBeDefined();
   });
 });

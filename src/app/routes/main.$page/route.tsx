@@ -18,8 +18,9 @@ import SavedItems from '../../../components/savedItems/SavedItems';
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const page = Number(params.page);
-  const searchQuery =
-    new URL(request.url).searchParams.get('searchQuery') || '';
+  const searchQuery = request?.url
+    ? new URL(request?.url)?.searchParams?.get('searchQuery') || ''
+    : '';
   const res = getProducts({
     query: searchQuery,
     page,
@@ -32,7 +33,7 @@ const Main = () => {
   const { res, page } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   return (
-    <div data-testid="main-page">
+    <div data-testid={`main-page-${page}`}>
       {navigation.state === 'loading' ? <Loader /> : ''}
       <Search searchValue={searchQuery} onSearch={update} />
       <Outlet />

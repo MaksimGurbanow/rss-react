@@ -13,7 +13,7 @@ const SaveButton = ({ id }: { id: number }) => {
     if (isSaved) {
       store.dispatch(removeProduct(id));
     } else {
-      fetch(window.ENV.REMIX_API_PRODUCTS_URL + id)
+      fetch('https://dummyjson.com/products/' + id)
         .then((res) => res.json())
         .then((product) => store.dispatch(addProducts([product])));
     }

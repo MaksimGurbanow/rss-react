@@ -12,6 +12,7 @@ const mediaTypes = [
   'bmp',
   'avif',
   'webp',
+  'svg?react',
 ];
 
 export default defineConfig({
@@ -39,9 +40,10 @@ export default defineConfig({
       exclude: [
         'next.config.mjs',
         '**/*data.ts',
-        'src/app/layout.tsx',
+        'src/app/root.tsx',
         'src/app/page.tsx',
         '**/*route.ts',
+        'build',
         ...coverageConfigDefaults.exclude,
       ],
     },

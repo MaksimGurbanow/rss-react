@@ -23,8 +23,7 @@ export interface ButtonProps extends BaseProps {
 
 export interface ItemProps
   extends Pick<Product, 'title' | 'images' | 'id'>,
-    BaseProps {
-}
+    BaseProps {}
 
 export interface SearchProps {
   onSearch?: (value: string) => void;

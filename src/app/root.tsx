@@ -44,12 +44,12 @@ export default function App() {
             </StoreProvider>
           </ThemeProvider>
         </ErrorBoundary>
+        <Scripts />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+            __html: `window.ENV = ${JSON.stringify(data?.ENV)}`,
           }}
         />
-        <Scripts />
       </body>
     </html>
   );

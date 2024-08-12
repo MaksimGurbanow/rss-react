@@ -11,7 +11,7 @@ const getProducts = async ({
 }): Promise<DummyResponse & { page: number }> => {
   const skip = (page - 1) * limit;
   const response = await fetch(
-    `${process.env.REMIX_API_PAGE_URL}/search?q=${query.trim() || ''}&skip=${skip}&limit=${limit}&select=title&select=id&select=images`,
+    `https://dummyjson.com/products/search?q=${query.trim() || ''}&skip=${skip}&limit=${limit}&select=title&select=id&select=images`,
   );
 
   return await response.json().then((res) => ({ ...res, page }));

@@ -51,6 +51,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'import/no-anonymous-default-export': 'off',
     '@next/next/no-title-in-document-head': 'off',
-    '@next/next/no-img-element': 'off'
+    '@next/next/no-img-element': 'off',
+    'react-hooks/exhaustive-deps': 'off'
   },
 };

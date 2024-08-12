@@ -1,10 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { server } from './mockServer';
-import { routedComponent, wrappedComponent } from './index.test';
+import { wrappedComponent } from './index.test';
 import { mockItem } from './contants';
 import capitalize from '../utils/capitalize';
 import Details from '../app/routes/main.$page.details.($id)/route';
+import RemixStub from './remixMockRouter';
 
 describe('Details', () => {
   beforeAll(() => {
@@ -23,24 +24,26 @@ describe('Details', () => {
   });
 
   test('Should render while data is not fetched yet', async () => {
-    routedComponent('/main/1/details/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1/details/1']} />);
+
     const details = await screen.findByTestId('details-page');
     expect(details).toBeDefined();
   });
 
   test('Should contain close button', async () => {
-    routedComponent('/main/1/details/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1/details/1']} />);
+
     const button = await screen.findByTestId('details-close-button');
     expect(button).toBeDefined();
   });
 
   test('Should contain open button if details are closed', async () => {
-    wrappedComponent(<Details product={mockItem} productId="1" />);
+    wrappedComponent(<RemixStub initialEntries={['/main/1/details']} />);
     expect(await screen.findByTestId('open-details-button')).toBeDefined();
   });
 
   test('Should render appropriate data', async () => {
-    wrappedComponent(<Details product={mockItem} productId="1" />);
+    wrappedComponent(<RemixStub initialEntries={['/main/1/details/1']} />);
     await waitFor(
       async () => {
         const itemName = await screen.findByTestId('item-details-name');

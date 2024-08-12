@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { routedComponent } from './index.test';
 import { Theme, ThemeContext } from '../contexts/ThemeContext';
 import StoreProvider from '../redux/provider';
-import Main from '../app/main/[page]/[[...paths]]/page';
 import { server } from './mockServer';
+import { wrappedComponent } from './index.test';
+import RemixStub from './remixMockRouter';
 
 describe('Search', () => {
   beforeAll(() => {
@@ -18,7 +18,7 @@ describe('Search', () => {
     server.close();
   });
   test('Should render components correctly', async () => {
-    routedComponent('/main/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
     const input = await screen.findByTestId('search-input');
     const button = await screen.findByTestId('search-button');
     const toggle = await screen.findByTestId('toggle-theme');
@@ -31,7 +31,7 @@ describe('Search', () => {
   });
 
   test('Input should change value if is typed', async () => {
-    routedComponent('/main/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
     let input = await screen.findByTestId<HTMLInputElement>('search-input');
     await userEvent.type(input, 'new');
 
@@ -39,7 +39,7 @@ describe('Search', () => {
   });
 
   test('Toggle should change the theme', async () => {
-    routedComponent('/main/1');
+    wrappedComponent(<RemixStub initialEntries={['/main/1']} />);
     const toggle = await screen.findByTestId('toggle-theme');
     const themeWrapper = await screen.findByTestId('theme-wrapper');
     const { className } = themeWrapper;
@@ -56,7 +56,9 @@ describe('Search', () => {
     };
     render(
       <ThemeContext.Provider value={mockValue}>
-        <StoreProvider>{await Main({ params: { page: '1' } })}</StoreProvider>
+        <StoreProvider>
+          <RemixStub initialEntries={['/main/1']} />
+        </StoreProvider>
       </ThemeContext.Provider>,
     );
     const toggle = await screen.findByTestId('toggle-theme');
