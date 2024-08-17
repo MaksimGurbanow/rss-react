@@ -7,8 +7,8 @@ const Button = ({
   children,
   className,
   style,
+  type = 'button',
 }: ButtonProps) => {
-  console.log(classes);
   return (
     <button
       disabled={disabled}
@@ -17,6 +17,7 @@ const Button = ({
       }}
       className={`${classes.button} ${className}`}
       style={style}
+      type={type}
     >
       {children}
     </button>

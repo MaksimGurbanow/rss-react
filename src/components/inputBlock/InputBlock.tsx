@@ -1,27 +1,38 @@
 import { InputProps } from '../../types/props';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import classes from './inputBlock.module.scss';
 
 const InputBlock = ({
   onInput,
   value,
   name,
-  labelText,
+  label,
   type,
-  validation,
+  innerRef,
+  onChange,
+  autocomplete = '',
+  errors,
+  accept,
 }: InputProps) => {
-  console.log(validation);
   return (
     <div className={classes.inputBlock}>
-      {labelText && <label htmlFor={name}>{labelText}</label>}
+      {label && <label htmlFor={value}>{label}</label>}
       <input
         name={name}
-        id={name}
+        ref={innerRef}
+        id={value}
         type={type}
         value={value}
+        accept={accept}
         onInput={({ target }) =>
           onInput && onInput((target as HTMLInputElement).value)
         }
+        onChange={({ target }) =>
+          onChange && onChange((target as HTMLInputElement).value)
+        }
+        autoComplete={autocomplete || undefined}
       />
+      <ErrorMessage errors={errors || []} />
     </div>
   );
 };
