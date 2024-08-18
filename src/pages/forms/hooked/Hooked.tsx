@@ -12,6 +12,7 @@ import { fetchCountries, selectCountries } from '../../../redux/countries';
 import { store } from '../../../redux/store';
 import { setUser } from '../../../redux/user';
 import { useNavigate } from 'react-router';
+import { useNotification } from '../../../context/Notification';
 
 interface IUserForm extends Omit<IUser, 'image' | 'isLogined'> {
   image: FileList;
@@ -21,6 +22,7 @@ const Hooked = () => {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(userSchema, { abortEarly: false }),
   });
+  const { setVisible } = useNotification();
   const { errors } = formState;
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<IUserForm> = (data: IUserForm) => {
@@ -34,6 +36,7 @@ const Hooked = () => {
         }),
       );
       navigate('/');
+      setVisible(true);
     };
     reader.readAsDataURL(data.image.item(0) as File);
   };
