@@ -28,7 +28,6 @@ const InputBlock = forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={name}
             className={`${classes.inputBlockLabel} ${isFile && classes._file}`}
-            onLoad={() => console.log(1)}
           >
             {label}
             {isFile && (
@@ -44,7 +43,6 @@ const InputBlock = forwardRef<HTMLInputElement, InputProps>(
           id={name}
           type={type}
           onChange={(e) => {
-            console.log(1)
             if (onChange) {
               onChange(e);
             }

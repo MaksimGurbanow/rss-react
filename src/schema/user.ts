@@ -40,23 +40,25 @@ const userSchema = object({
     'Passwords should match',
     function (value) {
       const { password } = this.parent;
-      return value && value === password;
+      return !!value && value === password;
     },
   ),
   gender: string<'male' | 'female'>().required('Gender is required').strict(),
   termsAndConditions: boolean()
     .required()
     .isTrue('Please accept terms and conditions'),
-  image: mixed<File>()
+  image: mixed<FileList>()
     .required('Image is requirred')
-    .test('is-valid-type', 'Not a valid image type', (value) =>
-      isValidFileType(value && value.name && value.name.toLowerCase()),
-    )
-    .test(
-      'is-valid-size',
-      'max allowed size is 100kb',
-      (value) => value && value.size <= MAX_FILE_SIZE,
-    ),
+    .test('is-valid-type', 'Not a valid image type', (files) => {
+      const file = files.item(0);
+      return isValidFileType(
+        (file && file.name && file.name.toLowerCase()) || '',
+      );
+    })
+    .test('is-valid-size', 'max allowed size is 100kb', (files) => {
+      const file = files.item(0);
+      return !!file && file.size <= MAX_FILE_SIZE;
+    }),
   country: string().required('Country is required').strict(),
 });
 

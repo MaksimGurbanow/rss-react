@@ -96,7 +96,7 @@ const Uncontroled = () => {
             ? 'female'
             : undefined) as 'male' | 'female',
         termsAndConditions: termsAndConditions.ref.current?.checked,
-        image: imageFile,
+        image: image.current?.files,
         country: countrySelectRef.current?.value,
       };
       setErrors({});

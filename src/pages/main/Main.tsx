@@ -40,6 +40,14 @@ const Main = () => {
             <div>Country</div>
             <div>{user.country}</div>
           </div>
+          <div className={classes.userInfo}>
+            <div>Gender</div>
+            <div>{user.gender}</div>
+          </div>
+          <div className={classes.userInfo}>
+            <div>Terms and conditions</div>
+            <div>{user.termsAndConditions && 'Accepted'}</div>
+          </div>
           <div className={classes.imageBlock}>
             <h4>image</h4>
             <img src={user.image} alt="user" className={classes.image} />
