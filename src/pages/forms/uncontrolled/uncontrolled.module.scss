@@ -1,0 +1,22 @@
+.form, .formPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.formPage {
+  margin: 30px 0;
+  &Header {
+    font-size: clamp(2vw, 60px, 5vw);
+  }
+}
+
+.agreement {
+  flex-direction: row !important;
+}
+
+.imagePicker {
+  font-size: 13px;
+}

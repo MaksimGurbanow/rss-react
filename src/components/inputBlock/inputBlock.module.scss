@@ -1,0 +1,33 @@
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 20px;
+  margin: 0 auto;
+  gap: 5px;
+  &Label{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+    &._file {
+      border: 1px dashed gray;
+      width: 70vw;
+      height: 200px;
+      justify-content: center;
+      gap: 30px;
+    }
+  }
+  &Input {
+    font-size: 1.5em;
+    position: relative;
+    &._file {
+      opacity: 0;
+      display: none;
+      z-index: -1;
+    }
+   }
+}
+
+.error {
+  border: 1px solid red;
+}
