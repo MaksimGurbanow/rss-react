@@ -10,18 +10,35 @@ import Select from '../../../components/select/Select';
 import { useSelector } from 'react-redux';
 import { fetchCountries, selectCountries } from '../../../redux/countries';
 import { store } from '../../../redux/store';
+import { setUser } from '../../../redux/user';
+import { useNavigate } from 'react-router';
+import { useNotification } from '../../../context/Notification';
 
-interface IUserForm extends Omit<IUser, 'image'> {
-  image: File;
+interface IUserForm extends Omit<IUser, 'image' | 'isLogined'> {
+  image: FileList;
 }
 
 const Hooked = () => {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(userSchema, { abortEarly: false }),
   });
+  const { setVisible } = useNotification();
   const { errors } = formState;
-  const onSubmit: SubmitHandler<IUserForm> = (data) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<IUserForm> = (data: IUserForm) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      store.dispatch(
+        setUser({
+          ...data,
+          image: reader.result?.toString() || '',
+          isLogined: true,
+        }),
+      );
+      navigate('/');
+      setVisible(true);
+    };
+    reader.readAsDataURL(data.image.item(0) as File);
   };
 
   const countries = useSelector(selectCountries);

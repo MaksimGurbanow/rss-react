@@ -5,6 +5,7 @@ import NotFound from './pages/notFound/NotFound';
 import Uncontroled from './pages/forms/uncontrolled/Uncontrolled';
 import Hooked from './pages/forms/hooked/Hooked';
 import StoreProvider from './redux/store';
+import NotificationPorvider from './context/Notification';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <StoreProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <NotificationPorvider>
+        <RouterProvider router={router}></RouterProvider>
+      </NotificationPorvider>
     </StoreProvider>
   );
 }

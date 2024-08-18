@@ -4,6 +4,7 @@ import classes from './main.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useEffect } from 'react';
+import Alert from '../../components/alert/Alert';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Main = () => {
   }, [user]);
   return (
     <div className={classes.mainPage}>
+      <Alert />
       <div className={classes.buttons}>
         <Button onClick={() => navigate('/forms/uncontrolled')}>
           Uncontrolled form
@@ -39,6 +41,14 @@ const Main = () => {
           <div className={classes.userInfo}>
             <div>Country</div>
             <div>{user.country}</div>
+          </div>
+          <div className={classes.userInfo}>
+            <div>Gender</div>
+            <div>{user.gender}</div>
+          </div>
+          <div className={classes.userInfo}>
+            <div>Terms and conditions</div>
+            <div>{user.termsAndConditions && 'Accepted'}</div>
           </div>
           <div className={classes.imageBlock}>
             <h4>image</h4>

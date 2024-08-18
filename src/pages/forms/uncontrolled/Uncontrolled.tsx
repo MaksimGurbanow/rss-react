@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { store } from '../../../redux/store';
 import { setUser } from '../../../redux/user';
 import { useNavigate } from 'react-router-dom';
+import { useNotification } from '../../../context/Notification';
 
 const Uncontroled = () => {
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
@@ -77,6 +78,7 @@ const Uncontroled = () => {
   };
   const navigate = useNavigate();
   const countries = useSelector(selectCountries);
+  const { setVisible } = useNotification();
 
   useEffect(() => {
     store.dispatch(fetchCountries());
@@ -96,7 +98,7 @@ const Uncontroled = () => {
             ? 'female'
             : undefined) as 'male' | 'female',
         termsAndConditions: termsAndConditions.ref.current?.checked,
-        image: imageFile,
+        image: image.current?.files,
         country: countrySelectRef.current?.value,
       };
       setErrors({});
@@ -112,6 +114,7 @@ const Uncontroled = () => {
             }),
           );
           navigate('/');
+          setVisible(true);
         };
         reader.readAsDataURL(imageFile);
       }
