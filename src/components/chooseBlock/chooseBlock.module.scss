@@ -2,4 +2,25 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-direction: column;
+  margin: 0 auto;
+
+  &Text {
+    font-size: 20px;
+  }
+}
+
+.optionsBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.option {
+  align-items: center;
+}
+
+.error {
+  border: 1px solid red;
 }

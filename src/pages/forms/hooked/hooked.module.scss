@@ -1,0 +1,14 @@
+.hookedFormPage, .hookedForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+
+.hookedFormHeader {
+  font-size: clamp(2vw, 60px, 5vw);
+}
+
+.agreement {
+  flex-direction: row !important;
+}

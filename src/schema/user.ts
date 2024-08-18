@@ -35,12 +35,14 @@ const userSchema = object({
     .matches(/[!@#$%^]/, {
       message: 'Must include at least one special character. E.g. !,@,#,$,%,^',
     }),
-  submitPassword: string()
-    .required()
-    .test('is-password', 'Passwords should match', function (value) {
+  submitPassword: string().test(
+    'is-password',
+    'Passwords should match',
+    function (value) {
       const { password } = this.parent;
-      return value.match(password);
-    }),
+      return value && value === password;
+    },
+  ),
   gender: string<'male' | 'female'>().required('Gender is required').strict(),
   termsAndConditions: boolean()
     .required()
@@ -48,13 +50,14 @@ const userSchema = object({
   image: mixed<File>()
     .required('Image is requirred')
     .test('is-valid-type', 'Not a valid image type', (value) =>
-      isValidFileType(value && value.name.toLowerCase()),
+      isValidFileType(value && value.name && value.name.toLowerCase()),
     )
     .test(
       'is-valid-size',
       'max allowed size is 100kb',
       (value) => value && value.size <= MAX_FILE_SIZE,
     ),
+  country: string().required('Country is required').strict(),
 });
 
 export default userSchema;

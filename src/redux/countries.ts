@@ -8,12 +8,6 @@ export const fetchCountries = createAsyncThunk(
       'https://restcountries.com/v3.1/all?fields=name',
     );
     const data = await response.json();
-    console.log(
-      data.map((country: { name: { common: string; official: string } }) => ({
-        label: country.name.official,
-        value: country.name.official,
-      })),
-    );
     return data.map(
       (country: { name: { common: string; official: string } }) => ({
         label: country.name.official,

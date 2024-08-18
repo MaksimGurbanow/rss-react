@@ -1,3 +1,16 @@
 .selectBlock {
   display: flex;
+  flex-direction: column;
+  padding: 5px 20px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.selectForm {
+  margin: 0 auto;
+  max-width: 50%;
 }

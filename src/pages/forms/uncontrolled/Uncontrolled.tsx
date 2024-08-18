@@ -15,6 +15,8 @@ import { ValidationError } from 'yup';
 import { fetchCountries, selectCountries } from '../../../redux/countries';
 import { useSelector } from 'react-redux';
 import { store } from '../../../redux/store';
+import { setUser } from '../../../redux/user';
+import { useNavigate } from 'react-router-dom';
 
 const Uncontroled = () => {
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
@@ -73,26 +75,46 @@ const Uncontroled = () => {
     label: 'I accept Terms and Conditions',
     value: 'termsAndConditions',
   };
+  const navigate = useNavigate();
+  const countries = useSelector(selectCountries);
+
+  useEffect(() => {
+    store.dispatch(fetchCountries());
+  }, []);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
+      const imageFile = image.current?.files?.item(0);
+      const formData = {
+        ...Object.fromEntries(
+          inputs.map((input) => [input.name, input.ref.current?.value]),
+        ),
+        gender: (genders[0].ref.current?.checked
+          ? 'male'
+          : genders[1].ref.current?.checked
+            ? 'female'
+            : undefined) as 'male' | 'female',
+        termsAndConditions: termsAndConditions.ref.current?.checked,
+        image: imageFile,
+        country: countrySelectRef.current?.value,
+      };
       setErrors({});
-      await userSchema.validate(
-        {
-          ...Object.fromEntries(
-            inputs.map((input) => [input.name, input.ref.current?.value]),
-          ),
-          gender: genders[0].ref.current?.checked
-            ? 'male'
-            : genders[1].ref.current?.checked
-              ? 'female'
-              : undefined,
-          termsAndConditions: termsAndConditions.ref.current?.checked,
-          image: image.current?.files?.item(0),
-        },
-        { abortEarly: false },
-      );
+      await userSchema.validate(formData, { abortEarly: false });
+      if (imageFile) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          store.dispatch(
+            setUser({
+              ...formData,
+              image: reader.result?.toString() || '',
+              isLogined: true,
+            }),
+          );
+          navigate('/');
+        };
+        reader.readAsDataURL(imageFile);
+      }
     } catch (err) {
       if (err instanceof ValidationError) {
         err.inner.forEach((error) => {
@@ -108,43 +130,50 @@ const Uncontroled = () => {
     }
   };
 
-  const countries = useSelector(selectCountries);
-
-  useEffect(() => {
-    store.dispatch(fetchCountries());
-  }, []);
+  const countrySelectRef = useRef<HTMLSelectElement>(null);
 
   const image = useRef<HTMLInputElement>(null);
   return (
     <div className={classes.formPage}>
-      <h3>Uncontrolled components form</h3>
-      <form onSubmit={handleSubmit}>
+      <h1 className={classes.formPageHeader}>Uncontrolled components form</h1>
+      <form onSubmit={handleSubmit} className={classes.form}>
         {Object.values(inputs).map((input, index) => (
           <InputBlock
             name={input.name}
             label={input.label}
-            innerRef={input.ref}
+            ref={input.ref}
             type={input.type || 'text'}
             key={`${index}-${input.name}-${input.label}`}
             errors={errors[input.name]}
           />
         ))}
-        <ChooseBlock options={genders} error={errors.gender} />
+        <ChooseBlock
+          options={genders}
+          error={errors.gender}
+          text="Choose your gender"
+        />
         <ChooseBlock
           isMultiple
           options={[termsAndConditions]}
           error={errors.termsAndConditions}
+          className={classes.agreement}
         />
         <InputBlock
           type="file"
           name="picture"
           label="Picture"
-          innerRef={image}
+          ref={image}
           accept=".jpeg,.png,.jpg"
           errors={errors.image}
+          className={classes.imagePicker}
         />
         <Select
-          options={[{ label: 'country', value: 'country' }].concat(countries)}
+          options={countries}
+          ref={countrySelectRef}
+          name="countries"
+          id="countries"
+          label="Please select a country:"
+          errors={errors.country}
         />
         <Button type="submit">Submit</Button>
       </form>

@@ -1,5 +1,6 @@
-import { CSSProperties, LegacyRef, ReactNode } from 'react';
+import { ChangeEventHandler, CSSProperties, LegacyRef, ReactNode } from 'react';
 import { Callback } from './types';
+import { UseFormRegister } from 'react-hook-form';
 
 export interface BaseProps<T = void> {
   children?: string | ReactNode;
@@ -19,13 +20,14 @@ export interface InputProps extends BaseProps<HTMLInputElement> {
   value?: string;
   label?: string;
   onInput?: Callback<string>;
-  onChange?: Callback<string>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   validation?: unknown;
   checked?: boolean;
   autocomplete?: string;
-  errors?: string[];
+  errors?: string[] | null;
   accept?: HTMLInputElement['accept'];
+  register?: UseFormRegister<object>;
 }
 
 export interface ChooseProps extends BaseProps<HTMLInputElement> {
@@ -34,12 +36,19 @@ export interface ChooseProps extends BaseProps<HTMLInputElement> {
   options: {
     name: string;
     label: string;
-    value: string;
-    ref: LegacyRef<HTMLInputElement>;
+    value: string | boolean | number;
+    ref?: LegacyRef<HTMLInputElement>;
   }[];
-  error?: string[];
+  onChange?: ChangeEventHandler<EventTarget>;
+  error?: string[] | undefined | null;
+  text?: string;
 }
 
 export interface SelectProps extends BaseProps<HTMLSelectElement> {
   options: { label: string; value: string }[];
+  name: string;
+  label: string;
+  id?: string;
+  errors: string[] | null;
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
 }

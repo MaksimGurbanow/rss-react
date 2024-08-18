@@ -3,7 +3,7 @@ import classes from './errorMessage.module.scss';
 
 const ErrorMessage = ({ errors }: { errors: string[] }) => {
   return errors?.length ? (
-    <div className={classes.inputErrorBlock}>
+    <div className={classes.errorMessage}>
       {errors.map((error) => (
         <p key={'error' + genKey()}>{error}</p>
       ))}
